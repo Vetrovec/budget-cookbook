@@ -1,0 +1,15 @@
+{
+	"private": true,
+	"name": "budget-cookbook",
+	"scripts": {
+		"start:client": "npm run start --workspace=client",
+		"start:server": "npm run start --workspace=server"
+	},
+	"workspaces": [
+		"client",
+		"server"
+	],
+	"devDependencies": {
+		"prettier": "2.8.7"
+	}
+}
