@@ -4,10 +4,12 @@ const recipeRouter = require('./controllers/recipe');
 const ingredientRouter = require('./controllers/ingredient');
 const ingredientDao = require('./dao/IngredientDao');
 const recipeDao = require('./dao/RecipeDao');
+const recipeIngredientDao = require('./dao/RecipeIngredientDao');
 
 async function main() {
 	await ingredientDao.createTable();
 	await recipeDao.createTable();
+	await recipeIngredientDao.createTable();
 
 	const app = express();
 

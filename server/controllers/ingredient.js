@@ -3,20 +3,21 @@ const ingredientDao = require('../dao/IngredientDao');
 
 const router = express.Router();
 
+// Get overview of all ingredients
 router.get('/', async (req, res) => {
-	// Get all ingredients or a ingredient by id
-	const id = req.query.id;
-	if (id) {
-		const ingredient = await ingredientDao.getById(id);
-		res.status(200).json(ingredient);
-		return;
-	}
 	const ingredients = await ingredientDao.getAll();
 	res.status(200).json(ingredients);
 });
 
+// Get details of a single ingredient
+router.get('/:id', async (req, res) => {
+	const id = req.params.id;
+	const ingredient = await ingredientDao.getById(id);
+	res.status(200).json(ingredient);
+});
+
+// Create a new ingredient
 router.post('/', async (req, res) => {
-	// Create a new ingredient
 	const ingredient = req.body;
 	const newIngredientId = await ingredientDao.create(ingredient);
 	res.status(201).json({

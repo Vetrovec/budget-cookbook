@@ -1,6 +1,5 @@
 const dbConnection = require('../dbConnection');
 
-// Create IngredientDao class with CRUD methods same as RecipeDao
 class IngredientDao {
 	constructor(db) {
 		this.db = db;
@@ -10,7 +9,11 @@ class IngredientDao {
 	createTable() {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				'CREATE TABLE IF NOT EXISTS ingredient (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT)',
+				`CREATE TABLE IF NOT EXISTS ingredient (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					name TEXT,
+					price_per_unit REAL
+				)`,
 				(err) => {
 					if (err) {
 						reject(err);
@@ -52,8 +55,8 @@ class IngredientDao {
 	create(ingredient) {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				'INSERT INTO ingredient (name, description) VALUES (?, ?)',
-				[ingredient.name, ingredient.description],
+				'INSERT INTO ingredient (name, price_per_unit) VALUES (?, ?)',
+				[ingredient.name, ingredient.pricePerUnit],
 				function (err) {
 					if (err) {
 						reject(err);

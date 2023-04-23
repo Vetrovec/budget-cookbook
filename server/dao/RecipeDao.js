@@ -9,7 +9,11 @@ class RecipeDao {
 	createTable() {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				'CREATE TABLE IF NOT EXISTS recipe (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, description TEXT)',
+				`CREATE TABLE IF NOT EXISTS recipe (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					name TEXT,
+					description TEXT
+				)`,
 				(err) => {
 					if (err) {
 						reject(err);
