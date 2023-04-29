@@ -11,5 +11,8 @@
 	],
 	"devDependencies": {
 		"prettier": "2.8.7"
+	},
+	"dependencies": {
+		"express-fileupload": "^1.4.0"
 	}
 }
