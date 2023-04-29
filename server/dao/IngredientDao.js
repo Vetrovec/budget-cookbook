@@ -51,6 +51,20 @@ class IngredientDao {
 		});
 	}
 
+	// Get an ingredient by id
+	getByIds(ids) {
+		return new Promise((resolve, reject) => {
+			const placeholders = ids.map(() => "?").join(",");
+			this.db.all(`SELECT * FROM ingredient WHERE id IN(${placeholders})`, ids, (err, rows) => {
+				if (err) {
+					reject(err);
+					return;
+				}
+				resolve(rows);
+			});
+		});
+	}
+
 	// Create a new ingredient
 	create(ingredient) {
 		return new Promise((resolve, reject) => {
