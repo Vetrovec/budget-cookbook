@@ -13,14 +13,10 @@ export default function Layout({ children }) {
 			<CssBaseline />
 			<AppBar component="nav">
 				<Toolbar>
-					<Typography
-						variant="h6"
-						component="div"
-						sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-					>
+					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
 						Budget Cookbook
 					</Typography>
-					<Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+					<Box sx={{ display: 'flex', gap: 1 }}>
 						<Button component={Link} to="/" sx={{ color: '#fff' }}>
 							Home
 						</Button>

@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { RecipeForm } from '../components/RecipeForm';
-import { useIngredientQuery } from '../hooks/useIngredientQuery';
+import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 
 export function AddRecipe() {
 	const navigate = useNavigate();
 
-	const ingredientQuery = useIngredientQuery();
+	const ingredientQuery = useIngredientsQuery();
 
 	const handleRecipeSubmit = async (recipe) => {
 		const response = await fetch('/recipe', {

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-export function useIngredientQuery() {
+export function useIngredientsQuery() {
 	const ingredientQuery = useQuery({
 		queryKey: ['ingredients'],
 		queryFn: () =>

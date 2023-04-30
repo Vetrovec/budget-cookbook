@@ -1,10 +1,10 @@
 import Layout from '../components/Layout';
 import { Box, Typography } from '@mui/material';
-import { useRecipeQuery } from '../hooks/useRecipeQuery';
+import { useRecipesQuery } from '../hooks/useRecipesQuery';
 import { RecipeTable } from '../components/RecipeTable';
 
 export function Root() {
-	const recipeQuery = useRecipeQuery();
+	const recipeQuery = useRecipesQuery();
 	return (
 		<Layout>
 			<Box sx={{ flex: 1 }}>

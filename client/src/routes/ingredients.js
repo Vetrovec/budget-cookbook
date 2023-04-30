@@ -2,11 +2,11 @@ import Box from '@mui/material/Box';
 import Layout from '../components/Layout';
 import { IngredientForm } from '../components/IngredientForm';
 import { IngredientTable } from '../components/IngredientTable';
-import { useIngredientQuery } from '../hooks/useIngredientQuery';
+import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 import { Typography } from '@mui/material';
 
 export function Ingredients() {
-	const ingredientQuery = useIngredientQuery();
+	const ingredientQuery = useIngredientsQuery();
 
 	const handleIngredientSubmit = async (ingredient) => {
 		const response = await fetch('/ingredient', {

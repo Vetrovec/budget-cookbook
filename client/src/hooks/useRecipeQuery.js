@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-export function useRecipeQuery() {
+export function useRecipeQuery({ id }) {
 	const recipeQuery = useQuery({
-		queryKey: ['recipes'],
-		queryFn: () => fetch('/recipe').then((response) => response.json()),
+		queryKey: ['recipe', id],
+		queryFn: () => fetch(`/recipe/${id}`).then((response) => response.json()),
 	});
 	return recipeQuery;
 }

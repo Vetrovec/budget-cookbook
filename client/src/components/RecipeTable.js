@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Link } from 'react-router-dom';
 
 export function RecipeTable(props) {
 	console.log(props);
@@ -22,6 +23,8 @@ export function RecipeTable(props) {
 					{props.recipes.map((recipe) => (
 						<TableRow
 							key={recipe.id}
+							component={Link}
+							to={`/recipe/${recipe.id}`}
 							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 						>
 							<TableCell component="th" scope="row">
