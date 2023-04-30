@@ -8,7 +8,7 @@ class RecipeDao {
 	createTable() {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				`CREATE TABLE IF NOT EXISTS recipe_ingredient (
+				`CREATE TABLE recipe_ingredient (
 					recipe_id INTEGER,
 					ingredient_id INTEGER,
 					amount REAL,
@@ -27,20 +27,20 @@ class RecipeDao {
 		});
 	}
 
-	getRecipeIngredients(recipeId) {
+	getTotalRecipePrice(recipeId) {
 		return new Promise((resolve, reject) => {
-			this.db.all(
-				`SELECT *
+			this.db.get(
+				`SELECT SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
 				FROM recipe_ingredient
-				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
 				WHERE recipe_ingredient.recipe_id = ?`,
 				[recipeId],
-				(err, rows) => {
+				(err, row) => {
 					if (err) {
 						reject(err);
 						return;
 					}
-					resolve(rows);
+					resolve(row.total_price);
 				},
 			);
 		});

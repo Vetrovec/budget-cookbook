@@ -1,5 +1,4 @@
 const dbConnection = require('../dbConnection');
-const recipeIngredientDao = require("./RecipeIngredientDao");
 
 class RecipeDao {
 	constructor(db) {
@@ -13,10 +12,7 @@ class RecipeDao {
 				`CREATE TABLE IF NOT EXISTS recipe (
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
 					name TEXT,
-					description TEXT,
-					duration INT,
-					difficulty INT,
-					total_price DECIMAL(10, 2)
+					description TEXT
 				)`,
 				(err) => {
 					if (err) {
@@ -30,21 +26,9 @@ class RecipeDao {
 	}
 
 	// Get all recipes
-	getAll(filter) {
+	getAll() {
 		return new Promise((resolve, reject) => {
-			const params = [];
-			let query = 'SELECT * FROM recipe WHERE 1';
-			if (filter.ingredient) {
-				query += ' AND id IN(SELECT recipe_id FROM recipe_ingredient WHERE recipe_ingredient.ingredient_id = ?)';
-				params.push(filter.ingredient)
-			}
-
-			if (filter.maxPrice) {
-				query += ' AND total_price <= ?';
-				params.push(filter.maxPrice)
-			}
-
-			this.db.all(query, params, (err, rows) => {
+			this.db.all('SELECT * FROM recipe', (err, rows) => {
 				if (err) {
 					reject(err);
 					return;
@@ -68,35 +52,19 @@ class RecipeDao {
 	}
 
 	// Create a new recipe
-	async create(recipe, ingredients) {
+	create(recipe) {
 		return new Promise((resolve, reject) => {
-			const db = this.db
-			db.serialize(async function() {
-				db.run("BEGIN");
-				const recipeId = await new Promise((resolve, reject) => {
-					db.run(
-						'INSERT INTO recipe (name, description, duration, difficulty, total_price) VALUES (?, ?, ?, ?, ?)',
-						[recipe.name, recipe.description, recipe.duration, recipe.difficulty, recipe.totalPrice],
-						function (err) {
-							if (err) {
-								reject(err);
-								return;
-							}
-							resolve(this.lastID);
-						},
-					);
-
-				});
-				for (const ingredient of ingredients) {
-					await recipeIngredientDao.create({
-						recipeId: recipeId,
-						ingredientId: ingredient.id,
-						amount: ingredient.amount,
-					});
-				}
-				db.exec("COMMIT");
-				resolve(recipeId);
-			});
+			this.db.run(
+				'INSERT INTO recipe (name, description) VALUES (?, ?)',
+				[recipe.name, recipe.description],
+				function (err) {
+					if (err) {
+						reject(err);
+						return;
+					}
+					resolve(this.lastID);
+				},
+			);
 		});
 	}
 

@@ -1,4 +1,3 @@
-const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const recipeRouter = require('./controllers/recipe');
@@ -7,29 +6,12 @@ const ingredientDao = require('./dao/IngredientDao');
 const recipeDao = require('./dao/RecipeDao');
 const recipeIngredientDao = require('./dao/RecipeIngredientDao');
 
-const fileUpload = require('express-fileupload');
-
 async function main() {
 	await ingredientDao.createTable();
 	await recipeDao.createTable();
 	await recipeIngredientDao.createTable();
 
-	let uploadDir = path.join(__dirname, '/upload')
-	if (!fs.existsSync(uploadDir)) {
-		fs.mkdirSync(uploadDir, 0o744);
-	}
-
-	console.log("Created");
-
 	const app = express();
-	// Use the express-fileupload middleware
-	app.use(fileUpload({
-		limits: {
-			fileSize: 10000000,
-		},
-		abortOnLimit: true,
-	}));
-
 
 	app.use(express.static(path.join(__dirname, 'build')));
 	app.get('/', function (req, res) {
