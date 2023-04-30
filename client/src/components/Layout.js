@@ -27,6 +27,9 @@ export default function Layout({ children }) {
 						<Button component={Link} to="/ingredients" sx={{ color: '#fff' }}>
 							Ingredients
 						</Button>
+						<Button component={Link} to="/add-recipe" sx={{ color: '#fff' }}>
+							Add recipe
+						</Button>
 					</Box>
 				</Toolbar>
 			</AppBar>

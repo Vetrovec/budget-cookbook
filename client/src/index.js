@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Ingredients } from './routes/ingredients';
 import { Root } from './routes/root';
+import { AddRecipe } from './routes/addRecipe';
 
 const router = createBrowserRouter([
 	{
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
 	{
 		path: '/ingredients',
 		element: <Ingredients />,
+	},
+	{
+		path: '/add-recipe',
+		element: <AddRecipe />,
 	},
 ]);
 
