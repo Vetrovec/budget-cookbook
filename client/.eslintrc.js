@@ -22,5 +22,4 @@ module.exports = {
 		sourceType: 'module',
 	},
 	plugins: ['react'],
-	ignorePattern: ['node_modules/', 'build/', 'eslintrc.js'],
 };

@@ -9,5 +9,4 @@ module.exports = {
 	parserOptions: {
 		ecmaVersion: 'latest',
 	},
-	ignorePattern: ['node_modules/', 'build/', 'eslintrc.js'],
 };
