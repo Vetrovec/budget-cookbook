@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-export function useRecipesQuery({ priceLessThan } = {}) {
+export function useRecipesQuery(options = {}) {
+	const priceLessThan = options.priceLessThan ?? '';
 	const recipeQuery = useQuery({
 		queryKey: ['recipes', priceLessThan],
 		queryFn: ({ signal }) => {

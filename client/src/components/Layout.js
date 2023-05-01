@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 
 export default function Layout({ children }) {
 	return (
-		<Box sx={{ display: 'flex' }}>
+		<Box sx={{ display: 'flex', height: '100%', bgcolor: 'grey.100' }}>
 			<CssBaseline />
 			<AppBar component="nav">
 				<Toolbar>
@@ -18,7 +18,7 @@ export default function Layout({ children }) {
 					</Typography>
 					<Box sx={{ display: 'flex', gap: 1 }}>
 						<Button component={Link} to="/" sx={{ color: '#fff' }}>
-							Home
+							Dashboard
 						</Button>
 						<Button component={Link} to="/ingredients" sx={{ color: '#fff' }}>
 							Ingredients
@@ -29,7 +29,7 @@ export default function Layout({ children }) {
 					</Box>
 				</Toolbar>
 			</AppBar>
-			<Box component="main" sx={{ width: '100%', p: 3 }}>
+			<Box component="main" sx={{ width: '100%', p: 3, bgcolor: 'primary.50' }}>
 				<Toolbar />
 				{children}
 			</Box>
