@@ -32,8 +32,8 @@ class RecipeDao {
 			this.db.get(
 				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
 				FROM recipe
-				INNER JOIN recipe_ingredient ON recipe.id = recipe_ingredient.recipe_id
-				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
 				WHERE recipe_ingredient.recipe_id = ?`,
 				[recipeId],
 				(err, row) => {
@@ -52,8 +52,9 @@ class RecipeDao {
 			this.db.all(
 				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
 				FROM recipe
-				INNER JOIN recipe_ingredient ON recipe.id = recipe_ingredient.recipe_id
-				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id`,
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				GROUP BY recipe.id`,
 				(err, rows) => {
 					if (err) {
 						reject(err);
@@ -70,8 +71,8 @@ class RecipeDao {
 			this.db.all(
 				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
 				FROM recipe
-				INNER JOIN recipe_ingredient ON recipe.id = recipe_ingredient.recipe_id
-				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
 				GROUP BY recipe.id
 				HAVING total_price < ?`,
 				[price],
