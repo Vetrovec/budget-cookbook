@@ -17,6 +17,7 @@ export function RecipeTable(props) {
 					<TableRow>
 						<TableCell>Name</TableCell>
 						<TableCell>Description</TableCell>
+						<TableCell align="right">Price</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
@@ -31,6 +32,7 @@ export function RecipeTable(props) {
 								{recipe.name}
 							</TableCell>
 							<TableCell>{recipe.description}</TableCell>
+							<TableCell align="right">{recipe.price}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
@@ -45,6 +47,7 @@ const propTypes = {
 			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
 			description: PropTypes.string.isRequired,
+			price: PropTypes.number.isRequired,
 		}),
 	).isRequired,
 };

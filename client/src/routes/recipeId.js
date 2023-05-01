@@ -7,7 +7,6 @@ import { Typography } from '@mui/material';
 export function RecipeId() {
 	const { id } = useParams();
 	const recipeQuery = useRecipeQuery({ id });
-	console.log(recipeQuery.data);
 	return (
 		<Layout>
 			{recipeQuery.isLoading ? (
@@ -18,12 +17,10 @@ export function RecipeId() {
 				<Box xs={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
 					<Typography variant="h3">Recipe</Typography>
 					<Typography variant="subtitle1">
-						Name: {recipeQuery.data.recipe.name}
+						Name: {recipeQuery.data.name}
 					</Typography>
-					<Typography>
-						Description: {recipeQuery.data.recipe.description}
-					</Typography>
-					<Typography>Total price: {recipeQuery.data.totalPrice}</Typography>
+					<Typography>Description: {recipeQuery.data.description}</Typography>
+					<Typography>Total price: {recipeQuery.data.price}</Typography>
 				</Box>
 			) : null}
 		</Layout>

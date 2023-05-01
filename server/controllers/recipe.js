@@ -6,20 +6,23 @@ const router = express.Router();
 
 // Get overview of all recipes
 router.get('/', async (req, res) => {
-	const recipes = await recipeDao.getAll();
+	const { price_lt: priceLessThan } = req.query;
+	if (priceLessThan) {
+		const recipes = await recipeIngredientDao.getRecipesWithPriceLessThan(
+			Number(priceLessThan),
+		);
+		res.status(200).json(recipes);
+		return;
+	}
+	const recipes = await recipeIngredientDao.getRecipesWithPrice();
 	res.status(200).json(recipes);
 });
 
 // Get details of a single recipe
 router.get('/:id', async (req, res) => {
 	const id = req.params.id;
-	const recipe = await recipeDao.getById(id);
-	const totalPrice = await recipeIngredientDao.getTotalRecipePrice(id);
-	const response = {
-		recipe,
-		totalPrice,
-	};
-	res.status(200).json(response);
+	const recipe = await recipeIngredientDao.getRecipeWithPrice(id);
+	res.status(200).json(recipe);
 });
 
 // Creates a new recipe
