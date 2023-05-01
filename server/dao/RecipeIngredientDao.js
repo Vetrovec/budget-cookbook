@@ -68,12 +68,12 @@ class RecipeDao {
 	getRecipesWithPriceLessThan(price) {
 		return new Promise((resolve, reject) => {
 			this.db.all(
-				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS price
+				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
 				FROM recipe
 				INNER JOIN recipe_ingredient ON recipe.id = recipe_ingredient.recipe_id
 				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
 				GROUP BY recipe.id
-				HAVING price < ?`,
+				HAVING total_price < ?`,
 				[price],
 				(err, rows) => {
 					if (err) {
