@@ -8,7 +8,7 @@ class RecipeDao {
 	createTable() {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				`CREATE TABLE recipe_ingredient (
+				`CREATE TABLE IF NOT EXISTS recipe_ingredient (
 					recipe_id INTEGER,
 					ingredient_id INTEGER,
 					amount REAL,
@@ -27,12 +27,13 @@ class RecipeDao {
 		});
 	}
 
-	getTotalRecipePrice(recipeId) {
+	getRecipeWithPrice(recipeId) {
 		return new Promise((resolve, reject) => {
 			this.db.get(
-				`SELECT SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
-				FROM recipe_ingredient
-				INNER JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
+				FROM recipe
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
 				WHERE recipe_ingredient.recipe_id = ?`,
 				[recipeId],
 				(err, row) => {
@@ -40,7 +41,47 @@ class RecipeDao {
 						reject(err);
 						return;
 					}
-					resolve(row.total_price);
+					resolve(row);
+				},
+			);
+		});
+	}
+
+	getRecipesWithPrice() {
+		return new Promise((resolve, reject) => {
+			this.db.all(
+				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
+				FROM recipe
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				GROUP BY recipe.id`,
+				(err, rows) => {
+					if (err) {
+						reject(err);
+						return;
+					}
+					resolve(rows);
+				},
+			);
+		});
+	}
+
+	getRecipesWithPriceLessThan(price) {
+		return new Promise((resolve, reject) => {
+			this.db.all(
+				`SELECT recipe.id, recipe.name, recipe.description, SUM(ingredient.price_per_unit * recipe_ingredient.amount) AS total_price
+				FROM recipe
+				LEFT JOIN recipe_ingredient ON recipe_ingredient.recipe_id = recipe.id
+				LEFT JOIN ingredient ON recipe_ingredient.ingredient_id = ingredient.id
+				GROUP BY recipe.id
+				HAVING total_price < ?`,
+				[price],
+				(err, rows) => {
+					if (err) {
+						reject(err);
+						return;
+					}
+					resolve(rows);
 				},
 			);
 		});
