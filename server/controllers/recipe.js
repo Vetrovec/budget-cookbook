@@ -7,7 +7,7 @@ const error = require('../helpers/error');
 
 const router = express.Router();
 
-const UPLOAD_DIR = path.join(__dirname, '/../upload');
+const UPLOAD_DIR = path.join(__dirname, '/../public/upload');
 
 // Get overview of all recipes
 router.get('/', async (req, res) => {
@@ -79,12 +79,6 @@ router.post('/image/:id', async (req, res) => {
 
 // Creates a new recipe
 router.post('/', async (req, res) => {
-
-	// @TODO -> photo
-	// @TODO - filter by price and ingredient
-
-
-
 	const { recipe, ingredients } = req.body;
 	if (!recipe) {
 		res.status(400).json(
