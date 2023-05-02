@@ -40,9 +40,9 @@ class RecipeDao {
         params.push(filter.ingredient);
       }
 
-      if (filter.maxPrice) {
+      if (filter.price_lt) {
         query += " AND total_price <= ?";
-        params.push(filter.maxPrice);
+        params.push(filter.price_lt);
       }
 
       this.db.all(query, params, (err, rows) => {

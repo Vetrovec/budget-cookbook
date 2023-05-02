@@ -12,7 +12,7 @@ const UPLOAD_DIR = path.join(__dirname, "/../public/upload");
 // Get overview of all recipes
 router.get("/", async (req, res) => {
   const filter = {};
-  const { ingredient, maxPrice } = req.query;
+  const { ingredient, price_lt } = req.query;
   if (ingredient) {
     if (!ingredient instanceof Number) {
       res
@@ -25,14 +25,14 @@ router.get("/", async (req, res) => {
     filter.ingredient = ingredient;
   }
 
-  if (maxPrice) {
-    if (!maxPrice instanceof Number) {
+  if (price_lt) {
+    if (!price_lt instanceof Number) {
       res
         .status(400)
         .json(error.formatHttpError("Wrong maxPrice", "err-wrong-max-price"));
       return;
     }
-    filter.maxPrice = maxPrice;
+    filter.price_lt = price_lt;
   }
 
   const recipes = await recipeDao.getAll(filter);
