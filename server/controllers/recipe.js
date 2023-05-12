@@ -114,24 +114,23 @@ router.post("/", async (req, res) => {
 
   const ajv = new Ajv();
   const valid = ajv.validate(schema, req.body);
+  if (valid) {
+    const fetchedIngredients = await ingredientDao.getByIds(
+      ingredients.map((i) => {
+        return i.id;
+      })
+    );
 
-  const fetchedIngredients = await ingredientDao.getByIds(
-    ingredients.map((i) => {
-      return i.id;
-    })
-  );
-
-  let totalPrice = 0;
-  for (const fetchedIngredient of fetchedIngredients) {
-    for (const ingredient of ingredients) {
-      if (fetchedIngredient.id == ingredient.id) {
-        totalPrice += ingredient.amount * fetchedIngredient.price_per_unit;
+    let totalPrice = 0;
+    for (const fetchedIngredient of fetchedIngredients) {
+      for (const ingredient of ingredients) {
+        if (fetchedIngredient.id == ingredient.id) {
+          totalPrice += ingredient.amount * fetchedIngredient.price_per_unit;
+        }
       }
     }
-  }
-  recipe.totalPrice = totalPrice;
+    recipe.totalPrice = totalPrice;
 
-  if (valid) {
     const newRecipeId = await recipeDao.create(recipe, ingredients);
 
     res.status(201).json({
