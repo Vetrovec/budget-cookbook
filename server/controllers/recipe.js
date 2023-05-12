@@ -1,4 +1,5 @@
 const express = require("express");
+const Ajv = require("ajv").default;
 const path = require("path");
 const ingredientDao = require("../dao/IngredientDao");
 const recipeDao = require("../dao/RecipeDao");
@@ -8,6 +9,35 @@ const error = require("../helpers/error");
 const router = express.Router();
 
 const UPLOAD_DIR = path.join(__dirname, "/../public/upload");
+
+//Object schema
+const schema = {
+  type: "object",
+  properties: {
+    recipe: {
+      type: "object",
+      properties: {
+        name: { type: "string" },
+        description: { type: "string" },
+        duration: { type: "string" },
+        difficulty: { type: "string" },
+      },
+      required: ["name", "description", "duration", "difficulty"],
+    },
+    ingredients: {
+      type: "array",
+      items: {
+        type: "object",
+        properties: {
+          id: { type: "number" },
+          amount: { type: "number" },
+        },
+        required: ["id", "amount"],
+      },
+    },
+  },
+  required: ["recipe", "ingredients"],
+};
 
 // Get overview of all recipes
 router.get("/", async (req, res) => {
@@ -81,96 +111,38 @@ router.post("/image/:id", async (req, res) => {
 // Creates a new recipe
 router.post("/", async (req, res) => {
   const { recipe, ingredients } = req.body;
-  if (!recipe) {
-    res
-      .status(400)
-      .json(error.formatHttpError("Missing recipe", "err-missing-recipe"));
-    return;
-  }
-  if (!ingredients || !Array.isArray(ingredients) || ingredients.length === 0) {
-    res
-      .status(400)
-      .json(
-        error.formatHttpError("Missing ingredients", "err-missing-ingredients")
-      );
-    return;
-  }
 
-  for (const ingredient of ingredients) {
-    if (!ingredient.id || !ingredient.amount) {
-      res
-        .status(400)
-        .json(
-          error.formatHttpError(
-            "Invalid ingredients",
-            "err-invalid-ingredients"
-          )
-        );
-      return;
-    }
-  }
+  const ajv = new Ajv();
+  const valid = ajv.validate(schema, req.body);
+  if (valid) {
+    const fetchedIngredients = await ingredientDao.getByIds(
+      ingredients.map((i) => {
+        return i.id;
+      })
+    );
 
-  const { name, description, duration, difficulty } = recipe;
-  if (!name || !name instanceof String) {
-    res
-      .status(400)
-      .json(error.formatHttpError("Invalid name", "err-invalid-name"));
-    return;
-  }
-  if (!description || !description instanceof String) {
-    res
-      .status(400)
-      .json(
-        error.formatHttpError("Invalid description", "err-invalid-description")
-      );
-    return;
-  }
-  if (!duration || !duration instanceof Number) {
-    res
-      .status(400)
-      .json(error.formatHttpError("Invalid duration", "err-invalid-duration"));
-    return;
-  }
-  if (!difficulty || !duration instanceof Number) {
-    res
-      .status(400)
-      .json(
-        error.formatHttpError("Invalid difficulty", "err-invalid-difficulty")
-      );
-    return;
-  }
-
-  const fetchedIngredients = await ingredientDao.getByIds(
-    ingredients.map((i) => {
-      return i.id;
-    })
-  );
-  if (fetchedIngredients.length != ingredients.length) {
-    res
-      .status(400)
-      .json(
-        error.formatHttpError(
-          "Non existent ingredient",
-          "err-non-existent-ingredient"
-        )
-      );
-    return;
-  }
-
-  let totalPrice = 0;
-  for (const fetchedIngredient of fetchedIngredients) {
-    for (const ingredient of ingredients) {
-      if (fetchedIngredient.id == ingredient.id) {
-        totalPrice += ingredient.amount * fetchedIngredient.price_per_unit;
+    let totalPrice = 0;
+    for (const fetchedIngredient of fetchedIngredients) {
+      for (const ingredient of ingredients) {
+        if (fetchedIngredient.id == ingredient.id) {
+          totalPrice += ingredient.amount * fetchedIngredient.price_per_unit;
+        }
       }
     }
-  }
-  recipe.totalPrice = totalPrice;
-  const newRecipeId = await recipeDao.create(recipe, ingredients);
+    recipe.totalPrice = totalPrice;
 
-  res.status(201).json({
-    id: newRecipeId,
-  });
+    const newRecipeId = await recipeDao.create(recipe, ingredients);
+
+    res.status(201).json({
+      id: newRecipeId,
+    });
+  } else {
+    res.status(400).send({
+      errorMessage: "validation of input failed",
+      params: req.body,
+      reason: ajv.errors,
+    });
+  }
 });
 
 module.exports = router;
