@@ -10,7 +10,7 @@ let schema = {
   properties: {
     name: { type: "string" },
     baseUnit: { type: "string" },
-    pricePerUnit: { type: "string" },
+    pricePerUnit: { type: "number" },
   },
   required: ["name", "baseUnit", "pricePerUnit"],
 };
