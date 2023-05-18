@@ -17,6 +17,7 @@ export function Ingredients() {
 			body: JSON.stringify({
 				name: ingredient.name,
 				pricePerUnit: Number(ingredient.price),
+				baseUnit: ingredient.baseUnit,
 			}),
 		});
 		if (response.status === 201) {

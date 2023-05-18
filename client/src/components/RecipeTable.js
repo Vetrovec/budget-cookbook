@@ -9,7 +9,6 @@ import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 
 export function RecipeTable(props) {
-	console.log(props);
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="Recipe table">

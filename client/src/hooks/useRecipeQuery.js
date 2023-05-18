@@ -6,10 +6,10 @@ export function useRecipeQuery({ id }) {
 		queryFn: ({ signal }) =>
 			fetch(`/recipe/${id}`, { signal }).then((response) => response.json()),
 		select: (data) => ({
-			id: data.id,
-			name: data.name,
-			description: data.description,
-			price: Number(data.total_price),
+			id: data.recipe.id,
+			name: data.recipe.name,
+			description: data.recipe.description,
+			price: Number(data.recipe.total_price),
 		}),
 	});
 	return recipeQuery;

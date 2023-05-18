@@ -18,8 +18,10 @@ export function AddRecipe() {
 				recipe: {
 					name: recipe.name,
 					description: recipe.description,
-					ingredients: recipe.ingredients,
+					duration: recipe.duration,
+					difficulty: recipe.difficulty,
 				},
+				ingredients: recipe.ingredients,
 			}),
 		});
 		if (response.status === 201) {

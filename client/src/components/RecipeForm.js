@@ -10,6 +10,8 @@ import { useMemo, useState } from 'react';
 export function RecipeForm({ ingredients, onSubmit }) {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
+	const [duration, setDuration] = useState('');
+	const [difficulty, setDifficulty] = useState('');
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
 	const [ingredientAmountMap, setIngredientAmountMap] = useState(new Map());
 
@@ -44,9 +46,11 @@ export function RecipeForm({ ingredients, onSubmit }) {
 		onSubmit({
 			name,
 			description,
+			duration,
+			difficulty,
 			ingredients: selectedIngredients.map((id) => ({
 				id,
-				amount: ingredientAmountMap.get(id) ?? 0,
+				amount: Number(ingredientAmountMap.get(id)) ?? 0,
 			})),
 		});
 	};
@@ -70,6 +74,18 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					label="Description"
 					value={description}
 					onChange={(event) => setDescription(event.target.value)}
+				/>
+				<TextField
+					size="small"
+					label="Duration"
+					value={duration}
+					onChange={(event) => setDuration(event.target.value)}
+				/>
+				<TextField
+					size="small"
+					label="Difficulty"
+					value={difficulty}
+					onChange={(event) => setDifficulty(event.target.value)}
 				/>
 				<Select
 					multiple
