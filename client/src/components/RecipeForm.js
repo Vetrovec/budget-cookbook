@@ -14,6 +14,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	const [difficulty, setDifficulty] = useState('');
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
 	const [ingredientAmountMap, setIngredientAmountMap] = useState(new Map());
+	const [previewImage, setPreviewImage] = useState();
 
 	const totalPrice = useMemo(() => {
 		return selectedIngredients.reduce((total, ingredientId) => {
@@ -48,6 +49,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 			description,
 			duration,
 			difficulty,
+			previewImage,
 			ingredients: selectedIngredients.map((id) => ({
 				id,
 				amount: Number(ingredientAmountMap.get(id)) ?? 0,
@@ -124,6 +126,30 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 					);
 				})}
+				<Button
+					variant="contained"
+					component="label"
+					onChange={(e) => {
+						if (e.target.files?.length) {
+							setPreviewImage(e.target.files[0]);
+						}
+					}}
+				>
+					Upload Preview Image
+					<input accept="image/*" type="file" hidden />
+				</Button>
+				{previewImage && (
+					<Box>
+						<Typography>Preview: {previewImage.name}</Typography>
+						<Box component={Paper} sx={{ width: 'fit-content', p: 1, mt: 1 }}>
+							<img
+								src={URL.createObjectURL(previewImage)}
+								alt="preview"
+								style={{ display: 'block', width: '200px', height: 'auto' }}
+							/>
+						</Box>
+					</Box>
+				)}
 				<Typography>Total price: {totalPrice}</Typography>
 				<Button type="submit" variant="contained">
 					Create recipe

@@ -4,6 +4,13 @@ import * as PropTypes from 'prop-types';
 export function Recipe({ recipe }) {
 	return (
 		<Box component={Paper} sx={{ p: 2 }}>
+			<Box component={Paper} sx={{ width: 'fit-content', p: 1, mt: 1 }}>
+				<img
+					src={`/upload/${recipe.id}`}
+					alt="preview"
+					style={{ display: 'block', width: '200px', height: 'auto' }}
+				/>
+			</Box>
 			<Typography variant="h4">{recipe.name}</Typography>
 			<Typography>Description: {recipe.description}</Typography>
 			<Typography>Price: {recipe.price}</Typography>
