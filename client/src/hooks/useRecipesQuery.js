@@ -15,7 +15,8 @@ export function useRecipesQuery(options = {}) {
 			data.map((recipe) => ({
 				id: recipe.id,
 				name: recipe.name,
-				description: recipe.description,
+				duration: recipe.duration,
+				difficulty: recipe.difficulty,
 				price: Number(recipe.total_price),
 			})),
 	});

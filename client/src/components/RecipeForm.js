@@ -6,6 +6,7 @@ import { Select } from '@mui/material';
 import { Chip } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { useMemo, useState } from 'react';
+import ReactQuill from 'react-quill';
 
 export function RecipeForm({ ingredients, onSubmit }) {
 	const [name, setName] = useState('');
@@ -71,12 +72,13 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					value={name}
 					onChange={(event) => setName(event.target.value)}
 				/>
-				<TextField
-					size="small"
-					label="Description"
-					value={description}
-					onChange={(event) => setDescription(event.target.value)}
-				/>
+				<Box>
+					<ReactQuill
+						placeholder="Description"
+						value={description}
+						onChange={setDescription}
+					/>
+				</Box>
 				<TextField
 					size="small"
 					label="Duration"

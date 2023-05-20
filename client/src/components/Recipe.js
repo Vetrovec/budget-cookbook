@@ -12,7 +12,10 @@ export function Recipe({ recipe }) {
 				/>
 			</Box>
 			<Typography variant="h4">{recipe.name}</Typography>
-			<Typography>Description: {recipe.description}</Typography>
+			<Typography>
+				Description:{' '}
+				<span dangerouslySetInnerHTML={{ __html: recipe.description }} />
+			</Typography>
 			<Typography>Price: {recipe.price}</Typography>
 		</Box>
 	);

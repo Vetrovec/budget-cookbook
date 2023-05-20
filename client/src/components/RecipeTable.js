@@ -15,7 +15,8 @@ export function RecipeTable(props) {
 				<TableHead>
 					<TableRow>
 						<TableCell>Name</TableCell>
-						<TableCell>Description</TableCell>
+						<TableCell>Duration</TableCell>
+						<TableCell>Difficulty</TableCell>
 						<TableCell align="right">Price</TableCell>
 					</TableRow>
 				</TableHead>
@@ -30,7 +31,8 @@ export function RecipeTable(props) {
 							<TableCell component="th" scope="row">
 								{recipe.name}
 							</TableCell>
-							<TableCell>{recipe.description}</TableCell>
+							<TableCell>{recipe.duration}</TableCell>
+							<TableCell>{recipe.difficulty}</TableCell>
 							<TableCell align="right">{recipe.price}</TableCell>
 						</TableRow>
 					))}

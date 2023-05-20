@@ -1,6 +1,7 @@
+import 'react-quill/dist/quill.snow.css';
+import './index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';

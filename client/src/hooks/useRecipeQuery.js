@@ -9,6 +9,8 @@ export function useRecipeQuery({ id }) {
 			id: data.recipe.id,
 			name: data.recipe.name,
 			description: data.recipe.description,
+			duration: data.recipe.duration,
+			difficulty: data.recipe.difficulty,
 			price: Number(data.recipe.total_price),
 		}),
 	});

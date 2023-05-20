@@ -29,12 +29,14 @@ export function AddRecipe() {
 			return;
 		}
 		const { id } = await response.json();
-		const data = new FormData();
-		data.append('image', recipe.previewImage);
-		await fetch(`/recipe/image/${id}`, {
-			method: 'POST',
-			body: data,
-		});
+		if (recipe.previewImage) {
+			const data = new FormData();
+			data.append('image', recipe.previewImage);
+			await fetch(`/recipe/image/${id}`, {
+				method: 'POST',
+				body: data,
+			});
+		}
 		navigate(`/recipe/${id}`);
 	};
 
