@@ -1,35 +1,29 @@
 import Layout from '../components/Layout';
-import { Box, Paper, Switch, TextField, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
+import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 import { useRecipesQuery } from '../hooks/useRecipesQuery';
 import { RecipeTable } from '../components/RecipeTable';
+import { RecipeFilter } from '../components/RecipeFilter';
 
 export function Root() {
-	const [filtersEnabled, setFiltersEnabled] = useState(false);
-	const [priceLessThan, setPriceLessThan] = useState('');
-	const filters = filtersEnabled ? { priceLessThan } : {};
-	const recipeQuery = useRecipesQuery(filters);
+	const [filter, setFilter] = useState({
+		isEnabled: false,
+		priceLessThan: '',
+		selectedIngredient: null,
+	});
+	const recipeQuery = useRecipesQuery({
+		filter: filter.isEnabled ? filter : {},
+	});
+	const ingredientsQuery = useIngredientsQuery();
+
 	return (
 		<Layout>
-			<Box component={Paper} sx={{ padding: 2, mb: 2 }}>
-				<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-					<Typography variant="h6">Filters</Typography>
-					<Switch
-						selected={filtersEnabled}
-						onChange={() => setFiltersEnabled(!filtersEnabled)}
-					/>
-				</Box>
-				{filtersEnabled && (
-					<Box sx={{ mt: 2 }}>
-						<TextField
-							label="Price less than"
-							size="small"
-							value={priceLessThan}
-							onChange={(event) => setPriceLessThan(event.target.value)}
-						/>
-					</Box>
-				)}
-			</Box>
+			<RecipeFilter
+				filter={filter}
+				ingredients={ingredientsQuery.data}
+				onFilterChange={setFilter}
+			/>
 			<Box>
 				{recipeQuery.isLoading ? (
 					<Typography>Loading recipes...</Typography>

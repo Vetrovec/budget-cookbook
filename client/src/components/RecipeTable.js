@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
 
-export function RecipeTable(props) {
+export function RecipeTable({ recipes }) {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="Recipe table">
@@ -21,7 +21,7 @@ export function RecipeTable(props) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{props.recipes.map((recipe) => (
+					{recipes.map((recipe) => (
 						<TableRow
 							key={recipe.id}
 							component={Link}
