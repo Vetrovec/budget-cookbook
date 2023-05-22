@@ -16,7 +16,6 @@ export function Recipe({ recipe }) {
 				Description:{' '}
 				<span dangerouslySetInnerHTML={{ __html: recipe.description }} />
 			</Typography>
-			<Typography>Price: {recipe.price}</Typography>
 		</Box>
 	);
 }

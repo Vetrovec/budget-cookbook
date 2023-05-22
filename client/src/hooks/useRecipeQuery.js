@@ -12,6 +12,12 @@ export function useRecipeQuery({ id }) {
 			duration: data.recipe.duration,
 			difficulty: data.recipe.difficulty,
 			price: Number(data.recipe.total_price),
+			ingredients: data.ingredients.map((ingredient) => ({
+				id: ingredient.id,
+				name: ingredient.name,
+				amount: Number(ingredient.amount),
+				price: Number(ingredient.price_per_unit),
+			})),
 		}),
 	});
 	return recipeQuery;
