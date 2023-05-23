@@ -9,7 +9,7 @@ let schema = {
 	type: 'object',
 	properties: {
 		name: { type: 'string' },
-		baseUnit: { type: 'string' },
+		baseUnit: { enum: ['g', 'ml'] },
 		pricePerUnit: { type: 'number' },
 	},
 	required: ['name', 'baseUnit', 'pricePerUnit'],

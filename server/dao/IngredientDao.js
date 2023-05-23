@@ -12,7 +12,8 @@ class IngredientDao {
 				`CREATE TABLE IF NOT EXISTS ingredient (
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
 					name TEXT,
-					price_per_unit REAL
+					price_per_unit REAL,
+					base_unit TEXT CHECK(base_unit IN ('g', 'ml'))
 				)`,
 				(err) => {
 					if (err) {
@@ -73,8 +74,8 @@ class IngredientDao {
 	create(ingredient) {
 		return new Promise((resolve, reject) => {
 			this.db.run(
-				'INSERT INTO ingredient (name, price_per_unit) VALUES (?, ?)',
-				[ingredient.name, ingredient.pricePerUnit],
+				'INSERT INTO ingredient (name, price_per_unit, base_unit) VALUES (?, ?, ?)',
+				[ingredient.name, ingredient.pricePerUnit, ingredient.baseUnit],
 				function (err) {
 					if (err) {
 						reject(err);
