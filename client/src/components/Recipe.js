@@ -4,18 +4,35 @@ import * as PropTypes from 'prop-types';
 export function Recipe({ recipe }) {
 	return (
 		<Box component={Paper} sx={{ p: 2 }}>
-			<Box component={Paper} sx={{ width: 'fit-content', p: 1, mt: 1 }}>
-				<img
-					src={`/upload/${recipe.id}`}
-					alt="preview"
-					style={{ display: 'block', width: '200px', height: 'auto' }}
-				/>
+			<Box sx={{ display: 'flex', gap: 2 }}>
+				<Box
+					component={Paper}
+					sx={{
+						display: 'flex',
+						width: '16em',
+						height: '16em',
+						alignItems: 'center',
+						p: 1,
+					}}
+				>
+					<img
+						src={`/upload/${recipe.id}`}
+						alt="preview"
+						style={{ width: '100%', height: 'auto' }}
+					/>
+				</Box>
+				<Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, py: 1 }}>
+					<Typography variant="h5">{recipe.name}</Typography>
+					<Typography variant="body2">
+						Difficulty: {recipe.difficulty}
+					</Typography>
+					<Typography variant="body2">Duration: {recipe.duration}</Typography>
+				</Box>
 			</Box>
-			<Typography variant="h4">{recipe.name}</Typography>
-			<Typography>
-				Description:{' '}
-				<span dangerouslySetInnerHTML={{ __html: recipe.description }} />
-			</Typography>
+			<Box
+				sx={{ px: 1, mt: 4 }}
+				dangerouslySetInnerHTML={{ __html: recipe.description }}
+			/>
 		</Box>
 	);
 }
@@ -25,6 +42,8 @@ const propTypes = {
 		id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
 		description: PropTypes.string.isRequired,
+		difficulty: PropTypes.string.isRequired,
+		duration: PropTypes.string.isRequired,
 		price: PropTypes.number.isRequired,
 	}).isRequired,
 };
