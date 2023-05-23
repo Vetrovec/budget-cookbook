@@ -1,13 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 
-export function useRecipesQuery(options = {}) {
-	const priceLessThan = options.priceLessThan ?? '';
+export function useRecipesQuery(options = { filter: {} }) {
+	const priceLessThan = options.filter.priceLessThan;
+	const selectedIngredient = options.filter.selectedIngredient;
 	const recipeQuery = useQuery({
-		queryKey: ['recipes', priceLessThan],
+		queryKey: ['recipes', priceLessThan, selectedIngredient],
 		queryFn: ({ signal }) => {
-			let url = '/recipe';
+			const url = new URL('/recipe', window.location);
 			if (priceLessThan) {
-				url += `?price_lt=${priceLessThan}`;
+				url.searchParams.append('price_lt', priceLessThan);
+			}
+			if (selectedIngredient) {
+				url.searchParams.append('ingredient', selectedIngredient);
 			}
 			return fetch(url, { signal }).then((response) => response.json());
 		},
@@ -15,7 +19,8 @@ export function useRecipesQuery(options = {}) {
 			data.map((recipe) => ({
 				id: recipe.id,
 				name: recipe.name,
-				description: recipe.description,
+				duration: recipe.duration,
+				difficulty: recipe.difficulty,
 				price: Number(recipe.total_price),
 			})),
 	});

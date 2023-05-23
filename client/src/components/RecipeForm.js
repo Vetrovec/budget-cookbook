@@ -6,12 +6,16 @@ import { Select } from '@mui/material';
 import { Chip } from '@mui/material';
 import { MenuItem } from '@mui/material';
 import { useMemo, useState } from 'react';
+import ReactQuill from 'react-quill';
 
 export function RecipeForm({ ingredients, onSubmit }) {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
+	const [duration, setDuration] = useState('');
+	const [difficulty, setDifficulty] = useState('');
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
 	const [ingredientAmountMap, setIngredientAmountMap] = useState(new Map());
+	const [previewImage, setPreviewImage] = useState();
 
 	const totalPrice = useMemo(() => {
 		return selectedIngredients.reduce((total, ingredientId) => {
@@ -44,9 +48,12 @@ export function RecipeForm({ ingredients, onSubmit }) {
 		onSubmit({
 			name,
 			description,
+			duration,
+			difficulty,
+			previewImage,
 			ingredients: selectedIngredients.map((id) => ({
 				id,
-				amount: ingredientAmountMap.get(id) ?? 0,
+				amount: Number(ingredientAmountMap.get(id)) ?? 0,
 			})),
 		});
 	};
@@ -65,11 +72,24 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					value={name}
 					onChange={(event) => setName(event.target.value)}
 				/>
+				<Box>
+					<ReactQuill
+						placeholder="Description"
+						value={description}
+						onChange={setDescription}
+					/>
+				</Box>
 				<TextField
 					size="small"
-					label="Description"
-					value={description}
-					onChange={(event) => setDescription(event.target.value)}
+					label="Duration"
+					value={duration}
+					onChange={(event) => setDuration(event.target.value)}
+				/>
+				<TextField
+					size="small"
+					label="Difficulty"
+					value={difficulty}
+					onChange={(event) => setDifficulty(event.target.value)}
 				/>
 				<Select
 					multiple
@@ -108,6 +128,30 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 					);
 				})}
+				<Button
+					variant="contained"
+					component="label"
+					onChange={(e) => {
+						if (e.target.files?.length) {
+							setPreviewImage(e.target.files[0]);
+						}
+					}}
+				>
+					Upload Preview Image
+					<input accept="image/*" type="file" hidden />
+				</Button>
+				{previewImage && (
+					<Box>
+						<Typography>Preview: {previewImage.name}</Typography>
+						<Box component={Paper} sx={{ width: 'fit-content', p: 1, mt: 1 }}>
+							<img
+								src={URL.createObjectURL(previewImage)}
+								alt="preview"
+								style={{ display: 'block', width: '200px', height: 'auto' }}
+							/>
+						</Box>
+					</Box>
+				)}
 				<Typography>Total price: {totalPrice}</Typography>
 				<Button type="submit" variant="contained">
 					Create recipe

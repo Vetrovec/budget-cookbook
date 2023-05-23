@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import { RecipeForm } from '../components/RecipeForm';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
@@ -18,13 +19,27 @@ export function AddRecipe() {
 				recipe: {
 					name: recipe.name,
 					description: recipe.description,
-					ingredients: recipe.ingredients,
+					duration: recipe.duration,
+					difficulty: recipe.difficulty,
 				},
+				ingredients: recipe.ingredients,
 			}),
 		});
-		if (response.status === 201) {
-			navigate('/');
+		if (response.status !== 201) {
+			toast.error('Failed to create recipe');
+			return;
 		}
+		const { id } = await response.json();
+		if (recipe.previewImage) {
+			const data = new FormData();
+			data.append('image', recipe.previewImage);
+			await fetch(`/recipe/image/${id}`, {
+				method: 'POST',
+				body: data,
+			});
+		}
+		toast.success('Recipe created');
+		navigate(`/recipe/${id}`);
 	};
 
 	return (

@@ -7,31 +7,39 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
+import { useTheme } from '@mui/material';
 
-export function RecipeTable(props) {
-	console.log(props);
+export function RecipeTable({ recipes }) {
+	const theme = useTheme();
+
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="Recipe table">
 				<TableHead>
 					<TableRow>
 						<TableCell>Name</TableCell>
-						<TableCell>Description</TableCell>
+						<TableCell>Duration</TableCell>
+						<TableCell>Difficulty</TableCell>
 						<TableCell align="right">Price</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{props.recipes.map((recipe) => (
+					{recipes.map((recipe) => (
 						<TableRow
 							key={recipe.id}
 							component={Link}
 							to={`/recipe/${recipe.id}`}
-							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+							sx={{
+								textDecoration: 'none',
+								'&:last-child td, &:last-child th': { border: 0 },
+								'&:hover': { backgroundColor: theme.palette.grey[100] },
+							}}
 						>
 							<TableCell component="th" scope="row">
 								{recipe.name}
 							</TableCell>
-							<TableCell>{recipe.description}</TableCell>
+							<TableCell>{recipe.duration}</TableCell>
+							<TableCell>{recipe.difficulty}</TableCell>
 							<TableCell align="right">{recipe.price}</TableCell>
 						</TableRow>
 					))}

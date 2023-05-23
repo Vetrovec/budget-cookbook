@@ -7,7 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-export function IngredientTable(props) {
+export function IngredientTable({ ingredients }) {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="Ingredient table">
@@ -18,7 +18,7 @@ export function IngredientTable(props) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{props.ingredients.map((ingredient) => (
+					{ingredients.map((ingredient) => (
 						<TableRow
 							key={ingredient.id}
 							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
