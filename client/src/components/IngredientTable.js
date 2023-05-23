@@ -18,6 +18,13 @@ export function IngredientTable({ ingredients }) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
+					{ingredients.length === 0 && (
+						<TableRow>
+							<TableCell colSpan={2} align="center">
+								No ingredients found
+							</TableCell>
+						</TableRow>
+					)}
 					{ingredients.map((ingredient) => (
 						<TableRow
 							key={ingredient.id}
