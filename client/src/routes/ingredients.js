@@ -1,9 +1,10 @@
 import Box from '@mui/material/Box';
-import Layout from '../components/Layout';
+import { Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 import { IngredientForm } from '../components/IngredientForm';
 import { IngredientTable } from '../components/IngredientTable';
+import Layout from '../components/Layout';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
-import { Typography } from '@mui/material';
 
 export function Ingredients() {
 	const ingredientQuery = useIngredientsQuery();
@@ -21,7 +22,10 @@ export function Ingredients() {
 			}),
 		});
 		if (response.status === 201) {
+			toast.success('Ingredient created');
 			ingredientQuery.refetch();
+		} else {
+			toast.error('Failed to create ingredient');
 		}
 	};
 

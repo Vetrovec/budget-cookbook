@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 import { RecipeForm } from '../components/RecipeForm';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
@@ -25,7 +26,7 @@ export function AddRecipe() {
 			}),
 		});
 		if (response.status !== 201) {
-			// TODO: Show alert
+			toast.error('Failed to create recipe');
 			return;
 		}
 		const { id } = await response.json();
@@ -37,6 +38,7 @@ export function AddRecipe() {
 				body: data,
 			});
 		}
+		toast.success('Recipe created');
 		navigate(`/recipe/${id}`);
 	};
 

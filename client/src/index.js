@@ -1,14 +1,16 @@
 import 'react-quill/dist/quill.snow.css';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Ingredients } from './routes/ingredients';
-import { Root } from './routes/root';
+import { ToastContainer } from 'react-toastify';
+import reportWebVitals from './reportWebVitals';
 import { AddRecipe } from './routes/addRecipe';
+import { Ingredients } from './routes/ingredients';
 import { RecipeId } from './routes/recipeId';
+import { Root } from './routes/root';
 
 const router = createBrowserRouter([
 	{
@@ -35,6 +37,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
+			<ToastContainer />
 			<RouterProvider router={router} />
 		</QueryClientProvider>
 	</React.StrictMode>,
