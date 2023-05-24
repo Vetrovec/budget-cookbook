@@ -45,7 +45,7 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 								</ListItem>
 								<ListItem>
 									<Typography variant="body2">
-										Amount: {ingredient.amount}
+										Amount: {`${ingredient.amount} ${ingredient.baseUnit}`}
 									</Typography>
 								</ListItem>
 								<ListItem>
@@ -69,6 +69,7 @@ const propTypes = {
 			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
 			amount: PropTypes.number.isRequired,
+			baseUnit: PropTypes.string.isRequired,
 			price: PropTypes.number.isRequired,
 		}).isRequired,
 	).isRequired,

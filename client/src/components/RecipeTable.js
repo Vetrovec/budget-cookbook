@@ -24,6 +24,13 @@ export function RecipeTable({ recipes }) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
+					{recipes.length === 0 && (
+						<TableRow>
+							<TableCell colSpan={4} align="center">
+								No recipes found
+							</TableCell>
+						</TableRow>
+					)}
 					{recipes.map((recipe) => (
 						<TableRow
 							key={recipe.id}

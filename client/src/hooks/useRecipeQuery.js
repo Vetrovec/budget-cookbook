@@ -16,6 +16,7 @@ export function useRecipeQuery({ id }) {
 				id: ingredient.id,
 				name: ingredient.name,
 				amount: Number(ingredient.amount),
+				baseUnit: ingredient.base_unit,
 				price: Number(ingredient.price_per_unit),
 			})),
 		}),

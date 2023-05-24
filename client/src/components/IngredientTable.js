@@ -14,10 +14,17 @@ export function IngredientTable({ ingredients }) {
 				<TableHead>
 					<TableRow>
 						<TableCell>Name</TableCell>
-						<TableCell align="right">Price (per unit)</TableCell>
+						<TableCell align="right">Price per unit</TableCell>
 					</TableRow>
 				</TableHead>
 				<TableBody>
+					{ingredients.length === 0 && (
+						<TableRow>
+							<TableCell colSpan={2} align="center">
+								No ingredients found
+							</TableCell>
+						</TableRow>
+					)}
 					{ingredients.map((ingredient) => (
 						<TableRow
 							key={ingredient.id}
@@ -26,7 +33,9 @@ export function IngredientTable({ ingredients }) {
 							<TableCell component="th" scope="row">
 								{ingredient.name}
 							</TableCell>
-							<TableCell align="right">{ingredient.price}</TableCell>
+							<TableCell align="right">
+								{ingredient.price} / {ingredient.baseUnit}
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>
