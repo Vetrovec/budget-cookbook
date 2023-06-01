@@ -71,7 +71,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 			onSubmit={handleSubmit}
 		>
 			<Typography component="h1" variant="h5" sx={{ gridColumn: '1 / -1' }}>
-				Add recipe
+				Add Recipe
 			</Typography>
 			<Box component={Paper} sx={{ p: 2 }}>
 				<Box sx={{ display: 'flex', gap: 2 }}>
@@ -155,6 +155,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 				component={Paper}
 				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 1 }}
 			>
+				<Typography variant="subtitle1">Select ingredients</Typography>
 				<Select
 					multiple
 					size="small"

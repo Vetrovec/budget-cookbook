@@ -18,6 +18,9 @@ export function Dashboard() {
 
 	return (
 		<Box>
+			<Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+				Dashboard
+			</Typography>
 			<RecipeFilter
 				filter={filter}
 				ingredients={ingredientsQuery.data}

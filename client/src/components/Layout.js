@@ -6,17 +6,23 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
 import { Link, Outlet } from 'react-router-dom';
 
 export default function Layout() {
 	return (
-		<Box sx={{ display: 'flex', minHeight: '100%', bgcolor: 'grey.100' }}>
+		<Box sx={{ display: 'flex', minHeight: '100%', bgcolor: 'grey.200' }}>
 			<CssBaseline />
 			<AppBar component="nav">
 				<Toolbar>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Budget Cookbook
-					</Typography>
+					<Box
+						sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, gap: 1 }}
+					>
+						<RestaurantOutlinedIcon />
+						<Typography variant="h6" component="span">
+							Budget Cookbook
+						</Typography>
+					</Box>
 					<Box sx={{ display: 'flex', gap: 1 }}>
 						<Button component={Link} to="/dashboard" sx={{ color: '#fff' }}>
 							Dashboard

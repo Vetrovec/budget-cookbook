@@ -28,18 +28,23 @@ export function Ingredients() {
 	};
 
 	return (
-		<Box sx={{ display: 'flex', gap: 2 }}>
-			<Box sx={{ flex: 1 }}>
-				{ingredientQuery.isLoading ? (
-					<Typography>Loading ingredients...</Typography>
-				) : ingredientQuery.error ? (
-					<Typography>Error loading ingredients</Typography>
-				) : ingredientQuery.data ? (
-					<IngredientTable ingredients={ingredientQuery.data} />
-				) : null}
-			</Box>
-			<Box sx={{ flex: 1 }}>
-				<IngredientForm onSubmit={handleIngredientSubmit} />
+		<Box>
+			<Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+				Ingredients
+			</Typography>
+			<Box sx={{ display: 'flex', gap: 2 }}>
+				<Box sx={{ flex: 1 }}>
+					{ingredientQuery.isLoading ? (
+						<Typography>Loading ingredients...</Typography>
+					) : ingredientQuery.error ? (
+						<Typography>Error loading ingredients</Typography>
+					) : ingredientQuery.data ? (
+						<IngredientTable ingredients={ingredientQuery.data} />
+					) : null}
+				</Box>
+				<Box sx={{ flex: 1 }}>
+					<IngredientForm onSubmit={handleIngredientSubmit} />
+				</Box>
 			</Box>
 		</Box>
 	);
