@@ -30,9 +30,26 @@ export default function Layout() {
 					</Box>
 				</Toolbar>
 			</AppBar>
-			<Box component="main" sx={{ width: '100%', p: 3, bgcolor: 'primary.50' }}>
+			<Box
+				component="main"
+				sx={{ display: 'flex', width: '100%', flexDirection: 'column', p: 3 }}
+			>
 				<Toolbar />
-				<Outlet />
+				<Box sx={{ flex: 'auto' }}>
+					<Outlet />
+				</Box>
+				<Box
+					sx={{
+						display: 'flex',
+						height: 32,
+						alignItems: 'center',
+						justifyContent: 'center',
+					}}
+				>
+					<Typography align="center" color="GrayText" variant="subtitle2">
+						&copy; 2023 - Budget Cookbook
+					</Typography>
+				</Box>
 			</Box>
 		</Box>
 	);
