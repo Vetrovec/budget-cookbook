@@ -8,6 +8,8 @@ import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import reportWebVitals from './reportWebVitals';
 import { router } from './router';
+import { ThemeProvider } from '@mui/material';
+import { theme } from './theme';
 
 const queryClient = new QueryClient();
 
@@ -16,7 +18,9 @@ root.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<ToastContainer />
-			<RouterProvider router={router} />
+			<ThemeProvider theme={theme}>
+				<RouterProvider router={router} />
+			</ThemeProvider>
 		</QueryClientProvider>
 	</React.StrictMode>,
 );

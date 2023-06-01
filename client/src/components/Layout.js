@@ -10,7 +10,7 @@ import { Link, Outlet } from 'react-router-dom';
 
 export default function Layout() {
 	return (
-		<Box sx={{ display: 'flex', height: '100%', bgcolor: 'grey.100' }}>
+		<Box sx={{ display: 'flex', minHeight: '100%', bgcolor: 'grey.100' }}>
 			<CssBaseline />
 			<AppBar component="nav">
 				<Toolbar>
@@ -41,9 +41,9 @@ export default function Layout() {
 				<Box
 					sx={{
 						display: 'flex',
-						height: 32,
 						alignItems: 'center',
 						justifyContent: 'center',
+						pt: 4,
 					}}
 				>
 					<Typography align="center" color="GrayText" variant="subtitle2">

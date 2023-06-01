@@ -11,6 +11,7 @@ import {
 import * as PropTypes from 'prop-types';
 import { useMemo, useState } from 'react';
 import ReactQuill from 'react-quill';
+import { roundTo } from '../helpers/numberUtil';
 
 export function RecipeForm({ ingredients, onSubmit }) {
 	const [name, setName] = useState('');
@@ -22,13 +23,14 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	const [previewImage, setPreviewImage] = useState();
 
 	const totalPrice = useMemo(() => {
-		return selectedIngredients.reduce((total, ingredientId) => {
+		const value = selectedIngredients.reduce((total, ingredientId) => {
 			const ingredient = ingredients.find(
 				(ingredient) => ingredient.id === ingredientId,
 			);
 			const amount = ingredientAmountMap.get(ingredientId) ?? 0;
 			return total + ingredient.price * amount;
 		}, 0);
+		return roundTo(value, 2);
 	}, [ingredientAmountMap, ingredients]);
 
 	const handleIngredientSelect = (event) => {
@@ -63,38 +65,96 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	};
 
 	return (
-		<Paper>
-			<Box
-				component="form"
-				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 2 }}
-				onSubmit={handleSubmit}
-			>
-				<Typography variant="subtitle1">Add recipe</Typography>
-				<TextField
-					size="small"
-					label="Name"
-					value={name}
-					onChange={(event) => setName(event.target.value)}
-				/>
-				<Box>
-					<ReactQuill
-						placeholder="Description"
-						value={description}
-						onChange={setDescription}
-					/>
+		<Box
+			component="form"
+			sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 2 }}
+			onSubmit={handleSubmit}
+		>
+			<Typography component="h1" variant="h5" sx={{ gridColumn: '1 / -1' }}>
+				Add recipe
+			</Typography>
+			<Box component={Paper} sx={{ p: 2 }}>
+				<Box sx={{ display: 'flex', gap: 2 }}>
+					<Box>
+						<Box
+							component={Paper}
+							sx={{
+								display: 'flex',
+								width: '16em',
+								height: '16em',
+								alignItems: 'center',
+								justifyContent: 'center',
+								p: 1,
+							}}
+						>
+							{previewImage ? (
+								<img
+									src={URL.createObjectURL(previewImage)}
+									alt="preview"
+									style={{
+										maxWidth: '100%',
+										maxHeight: '100%',
+									}}
+								/>
+							) : (
+								<Typography align="center" fontStyle="italic">
+									No image
+								</Typography>
+							)}
+						</Box>
+						<Button
+							variant="contained"
+							component="label"
+							onChange={(e) => {
+								if (e.target.files?.length) {
+									setPreviewImage(e.target.files[0]);
+								}
+							}}
+							sx={{ width: '100%', mt: 1 }}
+						>
+							Upload Preview Image
+							<input accept="image/*" type="file" hidden />
+						</Button>
+					</Box>
+					<Box
+						sx={{
+							display: 'flex',
+							flex: 'auto',
+							flexDirection: 'column',
+							gap: 2,
+						}}
+					>
+						<TextField
+							size="small"
+							label="Name"
+							name="recipe-name"
+							autoComplete="off"
+							value={name}
+							onChange={(event) => setName(event.target.value)}
+						/>
+						<TextField
+							size="small"
+							label="Duration"
+							name="recipe-duration"
+							autoComplete="off"
+							value={duration}
+							onChange={(event) => setDuration(event.target.value)}
+						/>
+						<TextField
+							size="small"
+							label="Difficulty"
+							name="recipe-difficulty"
+							autoComplete="off"
+							value={difficulty}
+							onChange={(event) => setDifficulty(event.target.value)}
+						/>
+					</Box>
 				</Box>
-				<TextField
-					size="small"
-					label="Duration"
-					value={duration}
-					onChange={(event) => setDuration(event.target.value)}
-				/>
-				<TextField
-					size="small"
-					label="Difficulty"
-					value={difficulty}
-					onChange={(event) => setDifficulty(event.target.value)}
-				/>
+			</Box>
+			<Box
+				component={Paper}
+				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 1 }}
+			>
 				<Select
 					multiple
 					size="small"
@@ -128,6 +188,8 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					return (
 						<TextField
 							key={id}
+							name={`ingredient-${id}`}
+							autoComplete="off"
 							size="small"
 							label={label}
 							value={value}
@@ -135,36 +197,35 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 					);
 				})}
-				<Button
-					variant="contained"
-					component="label"
-					onChange={(e) => {
-						if (e.target.files?.length) {
-							setPreviewImage(e.target.files[0]);
-						}
-					}}
-				>
-					Upload Preview Image
-					<input accept="image/*" type="file" hidden />
-				</Button>
-				{previewImage && (
-					<Box>
-						<Typography>Preview: {previewImage.name}</Typography>
-						<Box component={Paper} sx={{ width: 'fit-content', p: 1, mt: 1 }}>
-							<img
-								src={URL.createObjectURL(previewImage)}
-								alt="preview"
-								style={{ display: 'block', width: '200px', height: 'auto' }}
-							/>
-						</Box>
-					</Box>
-				)}
-				<Typography>Total price: {totalPrice}</Typography>
-				<Button type="submit" variant="contained">
-					Create recipe
-				</Button>
+				<Typography sx={{ pt: 2, mt: 'auto' }}>
+					Total price: {totalPrice}
+				</Typography>
 			</Box>
-		</Paper>
+			<Box
+				component={Paper}
+				sx={{
+					p: 2,
+					gridColumn: '1 / -1',
+				}}
+			>
+				<Typography sx={{ mb: 2 }}>Description</Typography>
+				<Box sx={{ height: 300 }}>
+					<ReactQuill
+						value={description}
+						onChange={setDescription}
+						style={{ height: 'calc(100% - 42px)' }}
+					/>
+				</Box>
+			</Box>
+			<Button
+				type="submit"
+				variant="contained"
+				size="large"
+				sx={{ gridColumn: '1 / -1' }}
+			>
+				Create recipe
+			</Button>
+		</Box>
 	);
 }
 

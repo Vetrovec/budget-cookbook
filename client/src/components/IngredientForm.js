@@ -31,12 +31,16 @@ export function IngredientForm({ onSubmit }) {
 				<TextField
 					size="small"
 					label="Name"
+					name="ingredient-name"
+					autoComplete="off"
 					value={name}
 					onChange={(event) => setName(event.target.value)}
 				/>
 				<TextField
 					size="small"
 					label="Price"
+					name="ingredient-price"
+					autoComplete="off"
 					value={price}
 					onChange={(event) => setPrice(event.target.value)}
 				/>

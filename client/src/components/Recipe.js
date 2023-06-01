@@ -20,7 +20,10 @@ export function Recipe({ recipe }) {
 						<img
 							src={`/upload/${recipe.id}`}
 							alt="preview"
-							style={{ width: '100%', height: 'auto' }}
+							style={{
+								maxWidth: '100%',
+								maxHeight: '100%',
+							}}
 						/>
 					) : (
 						<Typography align="center" fontStyle="italic">
