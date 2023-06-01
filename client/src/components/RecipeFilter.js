@@ -1,6 +1,12 @@
-import { Box, Paper, Switch, TextField, Typography } from '@mui/material';
-import { Select } from '@mui/material';
-import { MenuItem } from '@mui/material';
+import {
+	Box,
+	MenuItem,
+	Paper,
+	Select,
+	Switch,
+	TextField,
+	Typography,
+} from '@mui/material';
 import * as PropTypes from 'prop-types';
 import { useCallback } from 'react';
 

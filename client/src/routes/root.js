@@ -1,10 +1,10 @@
-import Layout from '../components/Layout';
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
-import { useRecipesQuery } from '../hooks/useRecipesQuery';
+import Layout from '../components/Layout';
 import { RecipeTable } from '../components/RecipeTable';
 import { RecipeFilter } from '../components/RecipeFilter';
+import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
+import { useRecipesQuery } from '../hooks/useRecipesQuery';
 
 export function Root() {
 	const [filter, setFilter] = useState({

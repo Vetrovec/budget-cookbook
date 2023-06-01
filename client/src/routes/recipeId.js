@@ -1,9 +1,9 @@
+import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
-import { useRecipeQuery } from '../hooks/useRecipeQuery';
-import { Box, Typography } from '@mui/material';
 import { Recipe } from '../components/Recipe';
 import { RecipeIngredientList } from '../components/RecipeIngredientList';
+import { useRecipeQuery } from '../hooks/useRecipeQuery';
 
 export function RecipeId() {
 	const { id } = useParams();
