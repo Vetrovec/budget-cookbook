@@ -7,11 +7,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+
 export function IngredientTable({ ingredients }) {
 	return (
 		<TableContainer component={Paper}>
 			<Table aria-label="Ingredient table">
 				<TableHead>
+					<h1>List of ingredients</h1>
 					<TableRow>
 						<TableCell>Name</TableCell>
 						<TableCell align="right">Price per unit</TableCell>
