@@ -1,6 +1,7 @@
+const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const Ajv = require('ajv').default;
-const path = require('path');
 const ingredientDao = require('../dao/IngredientDao');
 const recipeDao = require('../dao/RecipeDao');
 const recipeIngredientDao = require('../dao/RecipeIngredientDao');
@@ -78,9 +79,12 @@ router.get('/:id', async (req, res) => {
 		return;
 	}
 	const ingredients = await recipeIngredientDao.getRecipeIngredients(id);
+	const imagePath = path.join(UPLOAD_DIR, id);
+	const hasImage = fs.existsSync(imagePath);
 	const response = {
 		recipe,
 		ingredients,
+		has_image: hasImage,
 	};
 	res.status(200).json(response);
 });

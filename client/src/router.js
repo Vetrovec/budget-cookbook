@@ -5,11 +5,11 @@ import {
 	Route,
 } from 'react-router-dom';
 import Layout from './components/Layout';
-import { AddRecipe } from './routes/addRecipe';
-import { Ingredients } from './routes/ingredients';
-import { RecipeId } from './routes/recipeId';
+import { AddRecipe } from './routes/add-recipe';
 import { Dashboard } from './routes/dashboard';
+import { Ingredients } from './routes/ingredients';
 import { NotFound } from './routes/not-found';
+import { RecipeId } from './routes/recipe-id';
 
 export const router = createBrowserRouter(
 	createRoutesFromElements(

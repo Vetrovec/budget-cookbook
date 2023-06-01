@@ -12,14 +12,21 @@ export function Recipe({ recipe }) {
 						width: '16em',
 						height: '16em',
 						alignItems: 'center',
+						justifyContent: 'center',
 						p: 1,
 					}}
 				>
-					<img
-						src={`/upload/${recipe.id}`}
-						alt="preview"
-						style={{ width: '100%', height: 'auto' }}
-					/>
+					{recipe.hasImage ? (
+						<img
+							src={`/upload/${recipe.id}`}
+							alt="preview"
+							style={{ width: '100%', height: 'auto' }}
+						/>
+					) : (
+						<Typography align="center" fontStyle="italic">
+							No image
+						</Typography>
+					)}
 				</Box>
 				<Box sx={{ display: 'flex', flexDirection: 'column', gap: 1, py: 1 }}>
 					<Typography variant="h5">{recipe.name}</Typography>
@@ -45,6 +52,7 @@ const propTypes = {
 		difficulty: PropTypes.string.isRequired,
 		duration: PropTypes.string.isRequired,
 		price: PropTypes.number.isRequired,
+		hasImage: PropTypes.bool.isRequired,
 	}).isRequired,
 };
 Recipe.propTypes = propTypes;
