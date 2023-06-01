@@ -1,9 +1,13 @@
+import {
+	Box,
+	Button,
+	MenuItem,
+	Paper,
+	Select,
+	TextField,
+	Typography,
+} from '@mui/material';
 import * as PropTypes from 'prop-types';
-import { Box, Button, Typography } from '@mui/material';
-import { TextField } from '@mui/material';
-import { Paper } from '@mui/material';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import { useState } from 'react';
 
 export function IngredientForm({ onSubmit }) {
@@ -27,12 +31,16 @@ export function IngredientForm({ onSubmit }) {
 				<TextField
 					size="small"
 					label="Name"
+					name="ingredient-name"
+					autoComplete="off"
 					value={name}
 					onChange={(event) => setName(event.target.value)}
 				/>
 				<TextField
 					size="small"
 					label="Price"
+					name="ingredient-price"
+					autoComplete="off"
 					value={price}
 					onChange={(event) => setPrice(event.target.value)}
 				/>

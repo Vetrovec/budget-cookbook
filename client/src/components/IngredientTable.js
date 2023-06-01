@@ -1,47 +1,44 @@
+import {
+	Paper,
+	Table,
+	TableBody,
+	TableContainer,
+	TableHead,
+} from '@mui/material';
 import * as PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Typography } from '@mui/material';
+import { StyledTableRow } from '../styled/StyledTableRow';
+import { StyledTableCell } from '../styled/StyledTableCell';
 
 export function IngredientTable({ ingredients }) {
 	return (
 		<TableContainer component={Paper}>
-			<Box sx={{ p: 2 }}>
-				<Typography variant="subtitle1">List of ingredients</Typography>
-			</Box>
 			<Table aria-label="Ingredient table">
 				<TableHead>
-					<TableRow>
-						<TableCell>Name</TableCell>
-						<TableCell align="right">Price per unit</TableCell>
-					</TableRow>
+					<StyledTableRow>
+						<StyledTableCell>Name</StyledTableCell>
+						<StyledTableCell align="right">Price per unit</StyledTableCell>
+					</StyledTableRow>
 				</TableHead>
 				<TableBody>
 					{ingredients.length === 0 && (
-						<TableRow>
-							<TableCell colSpan={2} align="center">
+						<StyledTableRow>
+							<StyledTableCell colSpan={2} align="center">
 								No ingredients found
-							</TableCell>
-						</TableRow>
+							</StyledTableCell>
+						</StyledTableRow>
 					)}
 					{ingredients.map((ingredient) => (
-						<TableRow
+						<StyledTableRow
 							key={ingredient.id}
 							sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 						>
-							<TableCell component="th" scope="row">
+							<StyledTableCell component="th" scope="row">
 								{ingredient.name}
-							</TableCell>
-							<TableCell align="right">
+							</StyledTableCell>
+							<StyledTableCell align="right">
 								{ingredient.price} / {ingredient.baseUnit}
-							</TableCell>
-						</TableRow>
+							</StyledTableCell>
+						</StyledTableRow>
 					))}
 				</TableBody>
 			</Table>

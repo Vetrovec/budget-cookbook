@@ -1,9 +1,7 @@
-import Box from '@mui/material/Box';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import { IngredientForm } from '../components/IngredientForm';
 import { IngredientTable } from '../components/IngredientTable';
-import Layout from '../components/Layout';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 
 export function Ingredients() {
@@ -30,7 +28,10 @@ export function Ingredients() {
 	};
 
 	return (
-		<Layout>
+		<Box>
+			<Typography component="h1" variant="h5" sx={{ mb: 2 }}>
+				Ingredients
+			</Typography>
 			<Box sx={{ display: 'flex', gap: 2 }}>
 				<Box sx={{ flex: 1 }}>
 					{ingredientQuery.isLoading ? (
@@ -45,6 +46,6 @@ export function Ingredients() {
 					<IngredientForm onSubmit={handleIngredientSubmit} />
 				</Box>
 			</Box>
-		</Layout>
+		</Box>
 	);
 }

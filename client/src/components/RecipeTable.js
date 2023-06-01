@@ -1,42 +1,40 @@
+import {
+	Paper,
+	Table,
+	TableBody,
+	TableContainer,
+	TableHead,
+	useTheme,
+} from '@mui/material';
 import * as PropTypes from 'prop-types';
-import Box from '@mui/material/Box';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { Typography, useTheme } from '@mui/material';
+import { StyledTableCell } from '../styled/StyledTableCell';
+import { StyledTableRow } from '../styled/StyledTableRow';
 
 export function RecipeTable({ recipes }) {
 	const theme = useTheme();
 
 	return (
 		<TableContainer component={Paper}>
-			<Box sx={{ p: 2 }}>
-				<Typography variant="subtitle1">List of recipes</Typography>
-			</Box>
 			<Table aria-label="Recipe table">
 				<TableHead>
-					<TableRow>
-						<TableCell>Name</TableCell>
-						<TableCell>Duration</TableCell>
-						<TableCell>Difficulty</TableCell>
-						<TableCell align="right">Price</TableCell>
-					</TableRow>
+					<StyledTableRow>
+						<StyledTableCell>Name</StyledTableCell>
+						<StyledTableCell>Duration</StyledTableCell>
+						<StyledTableCell>Difficulty</StyledTableCell>
+						<StyledTableCell align="right">Price</StyledTableCell>
+					</StyledTableRow>
 				</TableHead>
 				<TableBody>
 					{recipes.length === 0 && (
-						<TableRow>
-							<TableCell colSpan={4} align="center">
+						<StyledTableRow>
+							<StyledTableCell colSpan={4} align="center">
 								No recipes found
-							</TableCell>
-						</TableRow>
+							</StyledTableCell>
+						</StyledTableRow>
 					)}
 					{recipes.map((recipe) => (
-						<TableRow
+						<StyledTableRow
 							key={recipe.id}
 							component={Link}
 							to={`/recipe/${recipe.id}`}
@@ -46,13 +44,13 @@ export function RecipeTable({ recipes }) {
 								'&:hover': { backgroundColor: theme.palette.grey[100] },
 							}}
 						>
-							<TableCell component="th" scope="row">
+							<StyledTableCell component="th" scope="row">
 								{recipe.name}
-							</TableCell>
-							<TableCell>{recipe.duration}</TableCell>
-							<TableCell>{recipe.difficulty}</TableCell>
-							<TableCell align="right">{recipe.price}</TableCell>
-						</TableRow>
+							</StyledTableCell>
+							<StyledTableCell>{recipe.duration}</StyledTableCell>
+							<StyledTableCell>{recipe.difficulty}</StyledTableCell>
+							<StyledTableCell align="right">{recipe.price}</StyledTableCell>
+						</StyledTableRow>
 					))}
 				</TableBody>
 			</Table>

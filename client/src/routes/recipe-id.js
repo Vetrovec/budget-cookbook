@@ -1,15 +1,14 @@
-import { useParams } from 'react-router-dom';
-import Layout from '../components/Layout';
-import { useRecipeQuery } from '../hooks/useRecipeQuery';
 import { Box, Typography } from '@mui/material';
+import { useParams } from 'react-router-dom';
 import { Recipe } from '../components/Recipe';
 import { RecipeIngredientList } from '../components/RecipeIngredientList';
+import { useRecipeQuery } from '../hooks/useRecipeQuery';
 
 export function RecipeId() {
 	const { id } = useParams();
 	const recipeQuery = useRecipeQuery({ id });
 	return (
-		<Layout>
+		<Box>
 			{recipeQuery.isLoading ? (
 				<Typography>Loading recipe...</Typography>
 			) : recipeQuery.error ? (
@@ -27,6 +26,6 @@ export function RecipeId() {
 					</Box>
 				</Box>
 			) : null}
-		</Layout>
+		</Box>
 	);
 }

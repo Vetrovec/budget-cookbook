@@ -1,23 +1,30 @@
-import * as PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {
+	AppBar,
+	Box,
+	Button,
+	CssBaseline,
+	Toolbar,
+	Typography,
+} from '@mui/material';
+import RestaurantOutlinedIcon from '@mui/icons-material/RestaurantOutlined';
+import { Link, Outlet } from 'react-router-dom';
 
-export default function Layout({ children }) {
+export default function Layout() {
 	return (
-		<Box sx={{ display: 'flex', height: '100%', bgcolor: 'grey.100' }}>
+		<Box sx={{ display: 'flex', minHeight: '100%', bgcolor: 'grey.200' }}>
 			<CssBaseline />
 			<AppBar component="nav">
 				<Toolbar>
-					<Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-						Budget Cookbook
-					</Typography>
+					<Box
+						sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, gap: 1 }}
+					>
+						<RestaurantOutlinedIcon />
+						<Typography variant="h6" component="span">
+							Budget Cookbook
+						</Typography>
+					</Box>
 					<Box sx={{ display: 'flex', gap: 1 }}>
-						<Button component={Link} to="/" sx={{ color: '#fff' }}>
+						<Button component={Link} to="/dashboard" sx={{ color: '#fff' }}>
 							Dashboard
 						</Button>
 						<Button component={Link} to="/ingredients" sx={{ color: '#fff' }}>
@@ -29,15 +36,27 @@ export default function Layout({ children }) {
 					</Box>
 				</Toolbar>
 			</AppBar>
-			<Box component="main" sx={{ width: '100%', p: 3, bgcolor: 'primary.50' }}>
+			<Box
+				component="main"
+				sx={{ display: 'flex', width: '100%', flexDirection: 'column', p: 3 }}
+			>
 				<Toolbar />
-				{children}
+				<Box sx={{ flex: 'auto' }}>
+					<Outlet />
+				</Box>
+				<Box
+					sx={{
+						display: 'flex',
+						alignItems: 'center',
+						justifyContent: 'center',
+						pt: 4,
+					}}
+				>
+					<Typography align="center" color="GrayText" variant="subtitle2">
+						&copy; 2023 - Budget Cookbook
+					</Typography>
+				</Box>
 			</Box>
 		</Box>
 	);
 }
-
-const propTypes = {
-	children: PropTypes.node.isRequired,
-};
-Layout.propTypes = propTypes;

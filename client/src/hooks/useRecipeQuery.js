@@ -12,6 +12,7 @@ export function useRecipeQuery({ id }) {
 			duration: data.recipe.duration,
 			difficulty: data.recipe.difficulty,
 			price: Number(data.recipe.total_price),
+			hasImage: data.has_image,
 			ingredients: data.ingredients.map((ingredient) => ({
 				id: ingredient.id,
 				name: ingredient.name,

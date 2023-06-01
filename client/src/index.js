@@ -4,32 +4,12 @@ import './index.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import reportWebVitals from './reportWebVitals';
-import { AddRecipe } from './routes/addRecipe';
-import { Ingredients } from './routes/ingredients';
-import { RecipeId } from './routes/recipeId';
-import { Root } from './routes/root';
-
-const router = createBrowserRouter([
-	{
-		path: '/',
-		element: <Root />,
-	},
-	{
-		path: '/ingredients',
-		element: <Ingredients />,
-	},
-	{
-		path: '/add-recipe',
-		element: <AddRecipe />,
-	},
-	{
-		path: '/recipe/:id',
-		element: <RecipeId />,
-	},
-]);
+import { router } from './router';
+import { ThemeProvider } from '@mui/material';
+import { theme } from './theme';
 
 const queryClient = new QueryClient();
 
@@ -38,7 +18,9 @@ root.render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<ToastContainer />
-			<RouterProvider router={router} />
+			<ThemeProvider theme={theme}>
+				<RouterProvider router={router} />
+			</ThemeProvider>
 		</QueryClientProvider>
 	</React.StrictMode>,
 );
