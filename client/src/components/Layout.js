@@ -6,10 +6,9 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import * as PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
-export default function Layout({ children }) {
+export default function Layout() {
 	return (
 		<Box sx={{ display: 'flex', height: '100%', bgcolor: 'grey.100' }}>
 			<CssBaseline />
@@ -19,7 +18,7 @@ export default function Layout({ children }) {
 						Budget Cookbook
 					</Typography>
 					<Box sx={{ display: 'flex', gap: 1 }}>
-						<Button component={Link} to="/" sx={{ color: '#fff' }}>
+						<Button component={Link} to="/dashboard" sx={{ color: '#fff' }}>
 							Dashboard
 						</Button>
 						<Button component={Link} to="/ingredients" sx={{ color: '#fff' }}>
@@ -33,13 +32,8 @@ export default function Layout({ children }) {
 			</AppBar>
 			<Box component="main" sx={{ width: '100%', p: 3, bgcolor: 'primary.50' }}>
 				<Toolbar />
-				{children}
+				<Outlet />
 			</Box>
 		</Box>
 	);
 }
-
-const propTypes = {
-	children: PropTypes.node.isRequired,
-};
-Layout.propTypes = propTypes;

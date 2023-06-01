@@ -2,7 +2,6 @@ import { Box, Typography } from '@mui/material';
 import { toast } from 'react-toastify';
 import { IngredientForm } from '../components/IngredientForm';
 import { IngredientTable } from '../components/IngredientTable';
-import Layout from '../components/Layout';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 
 export function Ingredients() {
@@ -29,21 +28,19 @@ export function Ingredients() {
 	};
 
 	return (
-		<Layout>
-			<Box sx={{ display: 'flex', gap: 2 }}>
-				<Box sx={{ flex: 1 }}>
-					{ingredientQuery.isLoading ? (
-						<Typography>Loading ingredients...</Typography>
-					) : ingredientQuery.error ? (
-						<Typography>Error loading ingredients</Typography>
-					) : ingredientQuery.data ? (
-						<IngredientTable ingredients={ingredientQuery.data} />
-					) : null}
-				</Box>
-				<Box sx={{ flex: 1 }}>
-					<IngredientForm onSubmit={handleIngredientSubmit} />
-				</Box>
+		<Box sx={{ display: 'flex', gap: 2 }}>
+			<Box sx={{ flex: 1 }}>
+				{ingredientQuery.isLoading ? (
+					<Typography>Loading ingredients...</Typography>
+				) : ingredientQuery.error ? (
+					<Typography>Error loading ingredients</Typography>
+				) : ingredientQuery.data ? (
+					<IngredientTable ingredients={ingredientQuery.data} />
+				) : null}
 			</Box>
-		</Layout>
+			<Box sx={{ flex: 1 }}>
+				<IngredientForm onSubmit={handleIngredientSubmit} />
+			</Box>
+		</Box>
 	);
 }

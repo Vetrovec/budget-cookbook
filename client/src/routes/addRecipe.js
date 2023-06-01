@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Layout from '../components/Layout';
 import { RecipeForm } from '../components/RecipeForm';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 
@@ -43,11 +42,9 @@ export function AddRecipe() {
 	};
 
 	return (
-		<Layout>
-			<RecipeForm
-				ingredients={ingredientQuery.data ?? []}
-				onSubmit={handleRecipeSubmit}
-			/>
-		</Layout>
+		<RecipeForm
+			ingredients={ingredientQuery.data ?? []}
+			onSubmit={handleRecipeSubmit}
+		/>
 	);
 }

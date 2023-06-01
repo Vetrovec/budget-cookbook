@@ -1,12 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { useState } from 'react';
-import Layout from '../components/Layout';
 import { RecipeTable } from '../components/RecipeTable';
 import { RecipeFilter } from '../components/RecipeFilter';
 import { useIngredientsQuery } from '../hooks/useIngredientsQuery';
 import { useRecipesQuery } from '../hooks/useRecipesQuery';
 
-export function Root() {
+export function Dashboard() {
 	const [filter, setFilter] = useState({
 		isEnabled: false,
 		priceLessThan: '',
@@ -18,7 +17,7 @@ export function Root() {
 	const ingredientsQuery = useIngredientsQuery();
 
 	return (
-		<Layout>
+		<Box>
 			<RecipeFilter
 				filter={filter}
 				ingredients={ingredientsQuery.data}
@@ -33,6 +32,6 @@ export function Root() {
 					<RecipeTable recipes={recipeQuery.data} />
 				) : null}
 			</Box>
-		</Layout>
+		</Box>
 	);
 }
