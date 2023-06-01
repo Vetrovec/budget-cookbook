@@ -65,7 +65,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 2 }}
 				onSubmit={handleSubmit}
 			>
-				<Typography variant="subtitle1">Add ingredient</Typography>
+				<Typography variant="subtitle1">Add recipe</Typography>
 				<TextField
 					size="small"
 					label="Name"

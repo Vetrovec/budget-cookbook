@@ -16,6 +16,7 @@ export function RecipeTable({ recipes }) {
 		<TableContainer component={Paper}>
 			<Table aria-label="Recipe table">
 				<TableHead>
+					<h1>List of recipes</h1>
 					<TableRow>
 						<TableCell>Name</TableCell>
 						<TableCell>Duration</TableCell>
