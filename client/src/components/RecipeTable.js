@@ -1,4 +1,5 @@
 import * as PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,16 +8,18 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Link } from 'react-router-dom';
-import { useTheme } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 
 export function RecipeTable({ recipes }) {
 	const theme = useTheme();
 
 	return (
 		<TableContainer component={Paper}>
+			<Box sx={{ p: 2 }}>
+				<Typography variant="subtitle1">List of recipes</Typography>
+			</Box>
 			<Table aria-label="Recipe table">
 				<TableHead>
-					<h1>List of recipes</h1>
 					<TableRow>
 						<TableCell>Name</TableCell>
 						<TableCell>Duration</TableCell>

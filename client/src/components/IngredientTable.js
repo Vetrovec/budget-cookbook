@@ -1,4 +1,5 @@
 import * as PropTypes from 'prop-types';
+import Box from '@mui/material/Box';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,14 +7,16 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import { Typography } from '@mui/material';
 
 export function IngredientTable({ ingredients }) {
 	return (
 		<TableContainer component={Paper}>
+			<Box sx={{ p: 2 }}>
+				<Typography variant="subtitle1">List of ingredients</Typography>
+			</Box>
 			<Table aria-label="Ingredient table">
 				<TableHead>
-					<h1>List of ingredients</h1>
 					<TableRow>
 						<TableCell>Name</TableCell>
 						<TableCell align="right">Price per unit</TableCell>

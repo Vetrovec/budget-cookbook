@@ -8,13 +8,14 @@ import {
 } from '@mui/material';
 import * as PropTypes from 'prop-types';
 import { useState } from 'react';
+import { roundTo } from '../helpers/numberUtil';
 
 export function RecipeIngredientList({ ingredients, totalPrice }) {
 	const [portionsInput, setPortionsInput] = useState('1');
 	const portions = Number.isNaN(Number(portionsInput))
 		? 1
 		: Number(portionsInput);
-	const totalPriceForPortions = Math.round(totalPrice * portions);
+	const totalPriceForPortions = roundTo(totalPrice * portions, 2);
 
 	return (
 		<Box component={Paper} sx={{ p: 2 }}>
@@ -34,8 +35,9 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 			</Box>
 			<List>
 				{ingredients.map((ingredient) => {
-					const price = Math.round(
+					const price = roundTo(
 						ingredient.price * ingredient.amount * portions,
+						2,
 					);
 					return (
 						<ListItem key={ingredient.id}>

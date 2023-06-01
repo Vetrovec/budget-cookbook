@@ -43,6 +43,7 @@ export function IngredientForm({ onSubmit }) {
 				>
 					<MenuItem value="g">Grams</MenuItem>
 					<MenuItem value="ml">Milliliters</MenuItem>
+					<MenuItem value="pc">Pieces</MenuItem>
 				</Select>
 				<Button type="submit" variant="contained">
 					Add

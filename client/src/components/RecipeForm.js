@@ -114,9 +114,12 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					))}
 				</Select>
 				{selectedIngredients.map((id) => {
-					const label = `${
-						ingredients.find((target) => target.id === id)?.name
-					} amount`;
+					const ingredient = ingredients.find((target) => target.id === id);
+					if (!ingredient) {
+						return null;
+					}
+					const { name, baseUnit } = ingredient;
+					const label = `${name} amount (${baseUnit})`;
 					const value = ingredientAmountMap.get(id) ?? '';
 					return (
 						<TextField

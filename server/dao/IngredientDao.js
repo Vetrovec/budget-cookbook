@@ -13,7 +13,7 @@ class IngredientDao {
 					id INTEGER PRIMARY KEY AUTOINCREMENT,
 					name TEXT,
 					price_per_unit REAL,
-					base_unit TEXT CHECK(base_unit IN ('g', 'ml'))
+					base_unit TEXT CHECK(base_unit IN ('g', 'ml', 'pc'))
 				)`,
 				(err) => {
 					if (err) {
