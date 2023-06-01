@@ -33,33 +33,56 @@ export function RecipeFilter({ filter, ingredients, onFilterChange }) {
 	);
 
 	return (
-		<Box component={Paper} sx={{ padding: 2, mb: 2 }}>
+		<Box
+			component={Paper}
+			sx={{
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'space-between',
+				padding: 2,
+				mb: 2,
+			}}
+		>
 			<Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 				<Typography variant="h6">Filters</Typography>
 				<Switch selected={filter.isEnabled} onChange={handleToggleFilter} />
 			</Box>
-			{filter.isEnabled && (
-				<Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
-					<TextField
-						label="Price less than"
-						size="small"
-						value={filter.priceLessThan}
-						onChange={handlePriceChange}
-					/>
-					<Select
-						size="small"
-						value={filter.selectedIngredient}
-						onChange={handleIngredientSelect}
-						sx={{ minWidth: '12em' }}
-					>
-						{ingredients?.map(({ id, name }) => (
-							<MenuItem key={id} value={id}>
-								{name}
-							</MenuItem>
-						))}
-					</Select>
-				</Box>
-			)}
+			<Box
+				sx={{
+					display: 'flex',
+					alignItems: 'center',
+					gap: 2,
+					opacity: filter.isEnabled ? 1 : 0.3,
+					pointerEvents: filter.isEnabled ? 'auto' : 'none',
+				}}
+			>
+				<TextField
+					label="Price less than"
+					size="small"
+					autoComplete="off"
+					name="filter-price"
+					value={filter.priceLessThan}
+					onChange={handlePriceChange}
+				/>
+				<Select
+					displayEmpty
+					size="small"
+					autoComplete="off"
+					name="filter-ingredient"
+					value={filter.selectedIngredient ?? ''}
+					onChange={handleIngredientSelect}
+					sx={{ minWidth: '12em' }}
+				>
+					<MenuItem value="">
+						<em>Any ingredient</em>
+					</MenuItem>
+					{ingredients?.map(({ id, name }) => (
+						<MenuItem key={id} value={id}>
+							{name}
+						</MenuItem>
+					))}
+				</Select>
+			</Box>
 		</Box>
 	);
 }
