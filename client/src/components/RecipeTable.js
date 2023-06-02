@@ -7,11 +7,12 @@ import {
 	useTheme,
 } from '@mui/material';
 import * as PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { StyledTableCell } from '../styled/StyledTableCell';
 import { StyledTableRow } from '../styled/StyledTableRow';
 
 export function RecipeTable({ recipes }) {
+	const navigate = useNavigate();
 	const theme = useTheme();
 
 	return (
@@ -36,8 +37,7 @@ export function RecipeTable({ recipes }) {
 					{recipes.map((recipe) => (
 						<StyledTableRow
 							key={recipe.id}
-							component={Link}
-							to={`/recipe/${recipe.id}`}
+							onClick={() => navigate(`/recipe/${recipe.id}`)}
 							sx={{
 								textDecoration: 'none',
 								'&:last-child td, &:last-child th': { border: 0 },
@@ -63,7 +63,8 @@ const propTypes = {
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
+			duration: PropTypes.string.isRequired,
+			difficulty: PropTypes.string.isRequired,
 			price: PropTypes.number.isRequired,
 		}),
 	).isRequired,
