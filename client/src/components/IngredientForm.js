@@ -54,7 +54,7 @@ export function IngredientForm({ onSubmit }) {
 					<MenuItem value="pc">Pieces</MenuItem>
 				</Select>
 				<Button type="submit" variant="contained">
-					Add
+					Add ingredient
 				</Button>
 			</Box>
 		</Paper>

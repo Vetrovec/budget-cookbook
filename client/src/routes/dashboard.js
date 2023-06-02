@@ -27,13 +27,14 @@ export function Dashboard() {
 				onFilterChange={setFilter}
 			/>
 			<Box>
-				{recipeQuery.isLoading ? (
-					<Typography>Loading recipes...</Typography>
-				) : recipeQuery.error ? (
+				{recipeQuery.error ? (
 					<Typography>Error loading recipes</Typography>
-				) : recipeQuery.data ? (
-					<RecipeTable recipes={recipeQuery.data} />
-				) : null}
+				) : (
+					<RecipeTable
+						isLoading={recipeQuery.isLoading}
+						recipes={recipeQuery.data}
+					/>
+				)}
 			</Box>
 		</Box>
 	);

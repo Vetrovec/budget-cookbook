@@ -103,6 +103,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 							)}
 						</Box>
 						<Button
+							size="small"
 							variant="contained"
 							component="label"
 							onChange={(e) => {
