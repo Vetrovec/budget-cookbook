@@ -7,38 +7,31 @@ const ingredientDao = require('../dao/IngredientDao');
 const recipeDao = require('../dao/RecipeDao');
 const recipeIngredientDao = require('../dao/RecipeIngredientDao');
 const error = require('../helpers/error');
-const { createRecipeSchema } = require('../schemas/recipe-schemas');
+const {
+	createRecipeSchema,
+	getRecipeSchema,
+} = require('../schemas/recipe-schemas');
 
 const router = express.Router();
 
 // Get overview of all recipes
 router.get('/', async (req, res) => {
-	const filter = {};
-	const { ingredient, price_lt } = req.query;
-	if (ingredient) {
-		if (!ingredient instanceof Number) {
-			res
-				.status(400)
-				.json(
-					error.formatHttpError('Wrong ingredient ID', 'err-wrong-ingredient'),
-				);
-			return;
-		}
-		filter.ingredient = ingredient;
+	const ajv = new Ajv();
+	const valid = ajv.validate(getRecipeSchema, req.query);
+	if (valid) {
+		const { ingredient, price_lt } = req.query;
+		const recipes = await recipeDao.getAll({
+			ingredient,
+			price_lt,
+		});
+		res.status(200).json(recipes);
+	} else {
+		res.status(400).send({
+			errorMessage: 'validation of input failed',
+			params: req.body,
+			reason: ajv.errors,
+		});
 	}
-
-	if (price_lt) {
-		if (!price_lt instanceof Number) {
-			res
-				.status(400)
-				.json(error.formatHttpError('Wrong maxPrice', 'err-wrong-max-price'));
-			return;
-		}
-		filter.price_lt = price_lt;
-	}
-
-	const recipes = await recipeDao.getAll(filter);
-	res.status(200).json(recipes);
 });
 
 // Get details of a single recipe
@@ -91,9 +84,7 @@ router.post('/', async (req, res) => {
 	const valid = ajv.validate(createRecipeSchema, req.body);
 	if (valid) {
 		const fetchedIngredients = await ingredientDao.getByIds(
-			ingredients.map((i) => {
-				return i.id;
-			}),
+			ingredients.map(({ id }) => id),
 		);
 
 		let totalPrice = 0;

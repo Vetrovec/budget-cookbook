@@ -1,3 +1,17 @@
+const getRecipeSchema = {
+	type: 'object',
+	properties: {
+		ingredient: {
+			type: 'string',
+			pattern: '^[0-9]+$',
+		},
+		price_lt: {
+			type: 'string',
+			pattern: '^\\d+(\\.\\d{1,2})?$',
+		},
+	},
+};
+
 const createRecipeSchema = {
 	type: 'object',
 	properties: {
@@ -27,5 +41,6 @@ const createRecipeSchema = {
 };
 
 module.exports = {
+	getRecipeSchema,
 	createRecipeSchema,
 };
