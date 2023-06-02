@@ -1,19 +1,9 @@
 const express = require('express');
 const Ajv = require('ajv').default;
 const ingredientDao = require('../dao/IngredientDao');
+const { createIngredientSchema } = require('../schemas/ingredient-schemas');
 
 const router = express.Router();
-
-//Object schema
-let schema = {
-	type: 'object',
-	properties: {
-		name: { type: 'string' },
-		baseUnit: { enum: ['g', 'ml', 'pc'] },
-		pricePerUnit: { type: 'number' },
-	},
-	required: ['name', 'baseUnit', 'pricePerUnit'],
-};
 
 // Get overview of all ingredients
 router.get('/', async (req, res) => {
@@ -31,7 +21,7 @@ router.get('/:id', async (req, res) => {
 // Create a new ingredient
 router.post('/', async (req, res) => {
 	const ajv = new Ajv();
-	const valid = ajv.validate(schema, req.body);
+	const valid = ajv.validate(createIngredientSchema, req.body);
 	if (valid) {
 		const ingredient = req.body;
 		const newIngredientId = await ingredientDao.create(ingredient);

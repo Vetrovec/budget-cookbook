@@ -7,37 +7,9 @@ const ingredientDao = require('../dao/IngredientDao');
 const recipeDao = require('../dao/RecipeDao');
 const recipeIngredientDao = require('../dao/RecipeIngredientDao');
 const error = require('../helpers/error');
+const { createRecipeSchema } = require('../schemas/recipe-schemas');
 
 const router = express.Router();
-
-//Object schema
-const schema = {
-	type: 'object',
-	properties: {
-		recipe: {
-			type: 'object',
-			properties: {
-				name: { type: 'string' },
-				description: { type: 'string' },
-				duration: { type: 'string' },
-				difficulty: { type: 'string' },
-			},
-			required: ['name', 'description', 'duration', 'difficulty'],
-		},
-		ingredients: {
-			type: 'array',
-			items: {
-				type: 'object',
-				properties: {
-					id: { type: 'number' },
-					amount: { type: 'number' },
-				},
-				required: ['id', 'amount'],
-			},
-		},
-	},
-	required: ['recipe', 'ingredients'],
-};
 
 // Get overview of all recipes
 router.get('/', async (req, res) => {
@@ -116,7 +88,7 @@ router.post('/', async (req, res) => {
 	const { recipe, ingredients } = req.body;
 
 	const ajv = new Ajv();
-	const valid = ajv.validate(schema, req.body);
+	const valid = ajv.validate(createRecipeSchema, req.body);
 	if (valid) {
 		const fetchedIngredients = await ingredientDao.getByIds(
 			ingredients.map((i) => {

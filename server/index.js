@@ -27,7 +27,7 @@ async function main() {
 		res.sendFile(path.join(__dirname, 'build', 'index.html'));
 	});
 
-	app.use(express.static(UPLOAD_DIR));
+	app.use('/upload', express.static(UPLOAD_DIR));
 
 	app.use(express.json());
 	app.use(express.urlencoded({ extended: true }));
