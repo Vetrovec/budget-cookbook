@@ -2,14 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const Ajv = require('ajv').default;
+const { UPLOAD_DIR } = require('../config');
 const ingredientDao = require('../dao/IngredientDao');
 const recipeDao = require('../dao/RecipeDao');
 const recipeIngredientDao = require('../dao/RecipeIngredientDao');
 const error = require('../helpers/error');
 
 const router = express.Router();
-
-const UPLOAD_DIR = path.join(__dirname, '/../public/upload');
 
 //Object schema
 const schema = {
