@@ -2,72 +2,36 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 const Ajv = require('ajv').default;
+const { UPLOAD_DIR } = require('../config');
 const ingredientDao = require('../dao/IngredientDao');
 const recipeDao = require('../dao/RecipeDao');
 const recipeIngredientDao = require('../dao/RecipeIngredientDao');
 const error = require('../helpers/error');
+const {
+	createRecipeSchema,
+	getRecipeSchema,
+} = require('../schemas/recipe-schemas');
 
 const router = express.Router();
 
-const UPLOAD_DIR = path.join(__dirname, '/../public/upload');
-
-//Object schema
-const schema = {
-	type: 'object',
-	properties: {
-		recipe: {
-			type: 'object',
-			properties: {
-				name: { type: 'string' },
-				description: { type: 'string' },
-				duration: { type: 'string' },
-				difficulty: { type: 'string' },
-			},
-			required: ['name', 'description', 'duration', 'difficulty'],
-		},
-		ingredients: {
-			type: 'array',
-			items: {
-				type: 'object',
-				properties: {
-					id: { type: 'number' },
-					amount: { type: 'number' },
-				},
-				required: ['id', 'amount'],
-			},
-		},
-	},
-	required: ['recipe', 'ingredients'],
-};
-
 // Get overview of all recipes
 router.get('/', async (req, res) => {
-	const filter = {};
-	const { ingredient, price_lt } = req.query;
-	if (ingredient) {
-		if (!ingredient instanceof Number) {
-			res
-				.status(400)
-				.json(
-					error.formatHttpError('Wrong ingredient ID', 'err-wrong-ingredient'),
-				);
-			return;
-		}
-		filter.ingredient = ingredient;
+	const ajv = new Ajv();
+	const valid = ajv.validate(getRecipeSchema, req.query);
+	if (valid) {
+		const { ingredient, price_lt } = req.query;
+		const recipes = await recipeDao.getAll({
+			ingredient,
+			price_lt,
+		});
+		res.status(200).json(recipes);
+	} else {
+		res.status(400).send({
+			errorMessage: 'validation of input failed',
+			params: req.body,
+			reason: ajv.errors,
+		});
 	}
-
-	if (price_lt) {
-		if (!price_lt instanceof Number) {
-			res
-				.status(400)
-				.json(error.formatHttpError('Wrong maxPrice', 'err-wrong-max-price'));
-			return;
-		}
-		filter.price_lt = price_lt;
-	}
-
-	const recipes = await recipeDao.getAll(filter);
-	res.status(200).json(recipes);
 });
 
 // Get details of a single recipe
@@ -117,12 +81,10 @@ router.post('/', async (req, res) => {
 	const { recipe, ingredients } = req.body;
 
 	const ajv = new Ajv();
-	const valid = ajv.validate(schema, req.body);
+	const valid = ajv.validate(createRecipeSchema, req.body);
 	if (valid) {
 		const fetchedIngredients = await ingredientDao.getByIds(
-			ingredients.map((i) => {
-				return i.id;
-			}),
+			ingredients.map(({ id }) => id),
 		);
 
 		let totalPrice = 0;

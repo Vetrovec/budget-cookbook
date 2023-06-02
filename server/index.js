@@ -1,6 +1,8 @@
+require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
 const express = require('express');
+const { UPLOAD_DIR } = require('./config');
 const recipeRouter = require('./controllers/recipe');
 const ingredientRouter = require('./controllers/ingredient');
 const ingredientDao = require('./dao/IngredientDao');
@@ -14,14 +16,21 @@ async function main() {
 	await recipeDao.createTable();
 	await recipeIngredientDao.createTable();
 
-	let uploadDir = path.join(__dirname, '/upload');
-	if (!fs.existsSync(uploadDir)) {
-		fs.mkdirSync(uploadDir, 0o744);
+	if (!fs.existsSync(UPLOAD_DIR)) {
+		fs.mkdirSync(UPLOAD_DIR, 0o744);
 	}
 
-	console.log('Created');
-
 	const app = express();
+
+	app.use(express.static(path.join(__dirname, 'build')));
+	app.get('/', function (_, res) {
+		res.sendFile(path.join(__dirname, 'build', 'index.html'));
+	});
+
+	app.use('/upload', express.static(UPLOAD_DIR));
+
+	app.use(express.json());
+	app.use(express.urlencoded({ extended: true }));
 	// Use the express-fileupload middleware
 	app.use(
 		fileUpload({
@@ -31,15 +40,6 @@ async function main() {
 			abortOnLimit: true,
 		}),
 	);
-
-	app.use(express.static(path.join(__dirname, 'build')));
-	app.use(express.static(path.join(__dirname, 'public')));
-	app.get('/', function (req, res) {
-		res.sendFile(path.join(__dirname, 'build', 'index.html'));
-	});
-
-	app.use(express.json());
-	app.use(express.urlencoded({ extended: true }));
 
 	app.use('/ingredient', ingredientRouter);
 	app.use('/recipe', recipeRouter);
