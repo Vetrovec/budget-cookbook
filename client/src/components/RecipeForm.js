@@ -103,6 +103,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 							)}
 						</Box>
 						<Button
+							size="small"
 							variant="contained"
 							component="label"
 							onChange={(e) => {
@@ -153,24 +154,29 @@ export function RecipeForm({ ingredients, onSubmit }) {
 			</Box>
 			<Box
 				component={Paper}
-				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 1 }}
+				sx={{ display: 'flex', flexDirection: 'column', p: 2, gap: 2 }}
 			>
-				<Typography variant="subtitle1">Select ingredients</Typography>
 				<Select
+					displayEmpty
 					multiple
 					size="small"
 					value={selectedIngredients}
 					onChange={handleIngredientSelect}
-					renderValue={(selectedIds) => (
-						<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-							{selectedIds.map((id) => (
-								<Chip
-									key={id}
-									label={ingredients.find((target) => target.id === id)?.name}
-								/>
-							))}
-						</Box>
-					)}
+					renderValue={(selectedIds) => {
+						if (!selectedIds?.length) {
+							return <em>Select ingredients</em>;
+						}
+						return (
+							<Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+								{selectedIds.map((id) => (
+									<Chip
+										key={id}
+										label={ingredients.find((target) => target.id === id)?.name}
+									/>
+								))}
+							</Box>
+						);
+					}}
 				>
 					{ingredients.map(({ id, name }) => (
 						<MenuItem key={id} value={id}>
@@ -210,7 +216,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 				}}
 			>
 				<Typography sx={{ mb: 2 }}>Description</Typography>
-				<Box sx={{ height: 300 }}>
+				<Box sx={{ height: 260 }}>
 					<ReactQuill
 						value={description}
 						onChange={setDescription}

@@ -7,11 +7,12 @@ import {
 	useTheme,
 } from '@mui/material';
 import * as PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { StyledTableCell } from '../styled/StyledTableCell';
 import { StyledTableRow } from '../styled/StyledTableRow';
 
-export function RecipeTable({ recipes }) {
+export function RecipeTable({ isLoading, recipes }) {
+	const navigate = useNavigate();
 	const theme = useTheme();
 
 	return (
@@ -26,32 +27,44 @@ export function RecipeTable({ recipes }) {
 					</StyledTableRow>
 				</TableHead>
 				<TableBody>
-					{recipes.length === 0 && (
+					{isLoading ? (
 						<StyledTableRow>
 							<StyledTableCell colSpan={4} align="center">
-								No recipes found
+								Loading recipes...
 							</StyledTableCell>
 						</StyledTableRow>
+					) : (
+						<>
+							{!recipes?.length && (
+								<StyledTableRow>
+									<StyledTableCell colSpan={4} align="center">
+										No recipes found
+									</StyledTableCell>
+								</StyledTableRow>
+							)}
+							{recipes?.map((recipe) => (
+								<StyledTableRow
+									key={recipe.id}
+									onClick={() => navigate(`/recipe/${recipe.id}`)}
+									sx={{
+										cursor: 'pointer',
+										textDecoration: 'none',
+										'&:last-child td, &:last-child th': { border: 0 },
+										'&:hover': { backgroundColor: theme.palette.grey[100] },
+									}}
+								>
+									<StyledTableCell component="th" scope="row">
+										{recipe.name}
+									</StyledTableCell>
+									<StyledTableCell>{recipe.duration}</StyledTableCell>
+									<StyledTableCell>{recipe.difficulty}</StyledTableCell>
+									<StyledTableCell align="right">
+										{recipe.price}
+									</StyledTableCell>
+								</StyledTableRow>
+							))}
+						</>
 					)}
-					{recipes.map((recipe) => (
-						<StyledTableRow
-							key={recipe.id}
-							component={Link}
-							to={`/recipe/${recipe.id}`}
-							sx={{
-								textDecoration: 'none',
-								'&:last-child td, &:last-child th': { border: 0 },
-								'&:hover': { backgroundColor: theme.palette.grey[100] },
-							}}
-						>
-							<StyledTableCell component="th" scope="row">
-								{recipe.name}
-							</StyledTableCell>
-							<StyledTableCell>{recipe.duration}</StyledTableCell>
-							<StyledTableCell>{recipe.difficulty}</StyledTableCell>
-							<StyledTableCell align="right">{recipe.price}</StyledTableCell>
-						</StyledTableRow>
-					))}
 				</TableBody>
 			</Table>
 		</TableContainer>
@@ -59,13 +72,15 @@ export function RecipeTable({ recipes }) {
 }
 
 const propTypes = {
+	isLoading: PropTypes.bool.isRequired,
 	recipes: PropTypes.arrayOf(
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
-			description: PropTypes.string.isRequired,
+			duration: PropTypes.string.isRequired,
+			difficulty: PropTypes.string.isRequired,
 			price: PropTypes.number.isRequired,
 		}),
-	).isRequired,
+	),
 };
 RecipeTable.propTypes = propTypes;

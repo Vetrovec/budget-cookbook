@@ -34,12 +34,12 @@ export function Ingredients() {
 			</Typography>
 			<Box sx={{ display: 'flex', gap: 2 }}>
 				<Box sx={{ flex: 1 }}>
-					{ingredientQuery.isLoading ? (
-						<Typography>Loading ingredients...</Typography>
-					) : ingredientQuery.error ? (
+					{ingredientQuery.error ? (
 						<Typography>Error loading ingredients</Typography>
 					) : ingredientQuery.data ? (
 						<IngredientTable ingredients={ingredientQuery.data} />
+					) : ingredientQuery.isLoading ? (
+						<Typography>Loading ingredients...</Typography>
 					) : null}
 				</Box>
 				<Box sx={{ flex: 1 }}>

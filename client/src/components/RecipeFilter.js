@@ -77,7 +77,7 @@ export function RecipeFilter({ filter, ingredients, onFilterChange }) {
 						<em>Any ingredient</em>
 					</MenuItem>
 					{ingredients?.map(({ id, name }) => (
-						<MenuItem key={id} value={id}>
+						<MenuItem key={id} value={id.toString()}>
 							{name}
 						</MenuItem>
 					))}
