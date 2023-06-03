@@ -24,6 +24,11 @@ router.get('/', async (req, res) => {
 			ingredient,
 			price_lt,
 		});
+		recipes.map((recipe) => {
+			recipe.hasImage = fs.existsSync(path.join(UPLOAD_DIR, recipe.id + ""));
+			return recipe;
+		})
+
 		res.status(200).json(recipes);
 	} else {
 		res.status(400).send({
