@@ -36,7 +36,9 @@ export function Recipe({ recipe }) {
 					<Typography variant="body2">
 						Difficulty: {recipe.difficulty}
 					</Typography>
-					<Typography variant="body2">Duration: {recipe.duration}</Typography>
+					<Typography variant="body2">
+						Duration: {recipe.duration} minutes
+					</Typography>
 				</Box>
 			</Box>
 			<Box
