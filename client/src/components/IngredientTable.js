@@ -36,7 +36,7 @@ export function IngredientTable({ ingredients }) {
 								{ingredient.name}
 							</StyledTableCell>
 							<StyledTableCell align="right">
-								{ingredient.price} / {ingredient.baseUnit}
+								{ingredient.price} Kč / {ingredient.baseUnit}
 							</StyledTableCell>
 						</StyledTableRow>
 					))}
