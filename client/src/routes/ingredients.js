@@ -32,8 +32,10 @@ export function Ingredients() {
 			<Typography component="h1" variant="h5" sx={{ mb: 2 }}>
 				Ingredients
 			</Typography>
-			<Box sx={{ display: 'flex', gap: 2 }}>
-				<Box sx={{ flex: 1 }}>
+			<Box
+				sx={{ display: 'grid', gridTemplateColumns: { lg: '1fr 1fr' }, gap: 2 }}
+			>
+				<Box>
 					{ingredientQuery.error ? (
 						<Typography>Error loading ingredients</Typography>
 					) : ingredientQuery.data ? (
@@ -42,7 +44,7 @@ export function Ingredients() {
 						<Typography>Loading ingredients...</Typography>
 					) : null}
 				</Box>
-				<Box sx={{ flex: 1 }}>
+				<Box>
 					<IngredientForm onSubmit={handleIngredientSubmit} />
 				</Box>
 			</Box>

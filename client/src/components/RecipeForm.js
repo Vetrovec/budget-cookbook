@@ -67,7 +67,11 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	return (
 		<Box
 			component="form"
-			sx={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 2 }}
+			sx={{
+				display: 'grid',
+				gridTemplateColumns: { lg: '2fr 1fr' },
+				gap: 2,
+			}}
 			onSubmit={handleSubmit}
 		>
 			<Typography component="h1" variant="h5" sx={{ gridColumn: '1 / -1' }}>
@@ -207,6 +211,9 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 					);
 				})}
+				{!selectedIngredients.length && (
+					<TextField disabled size="small" placeholder="Ingredient amount" />
+				)}
 				<Typography sx={{ pt: 2, mt: 'auto' }}>
 					Total price: {totalPrice}
 				</Typography>

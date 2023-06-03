@@ -42,7 +42,7 @@ export function Recipe({ recipe }) {
 				</Box>
 			</Box>
 			<Box
-				sx={{ px: 1, mt: 4 }}
+				sx={{ px: 1, mt: 4, wordBreak: 'break-all' }}
 				dangerouslySetInnerHTML={{ __html: recipe.description }}
 			/>
 		</Box>
