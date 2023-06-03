@@ -95,7 +95,7 @@ router.post('/', async (req, res) => {
 				}
 			}
 		}
-		recipe.totalPrice = totalPrice;
+		recipe.totalPrice = totalPrice.toFixed(2);
 
 		const newRecipeId = await recipeDao.create(recipe, ingredients);
 
