@@ -16,6 +16,7 @@ export function IngredientForm({ onSubmit }) {
 	const [baseUnit, setBaseUnit] = useState('g');
 
 	const handleSubmit = (event) => {
+		// Prevent the form from refreshing the page
 		event.preventDefault();
 		onSubmit({ name, price, baseUnit });
 	};
