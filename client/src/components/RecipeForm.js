@@ -58,7 +58,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					},
 				];
 			}, []),
-		[],
+		[ingredientAmountMap, ingredients, selectedIngredientIds],
 	);
 
 	const handleIngredientSelect = (event) => {
