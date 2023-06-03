@@ -58,6 +58,15 @@ router.get('/:id', async (req, res) => {
 	res.status(200).json(response);
 });
 
+// Get details of a single recipe
+router.delete('/:id', async (req, res) => {
+	const id = req.params.id;
+	if (id) {
+		await recipeDao.delete(id);
+	}
+	res.status(200).end();
+});
+
 router.post('/image/:id', async (req, res) => {
 	const id = req.params.id;
 	const { image } = req.files;
