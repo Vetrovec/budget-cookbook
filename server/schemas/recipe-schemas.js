@@ -18,7 +18,7 @@ const createRecipeSchema = {
 		recipe: {
 			type: 'object',
 			properties: {
-				name: { type: 'string', maxLength: 64 },
+				name: { type: 'string', maxLength: 64, minLength: 1 },
 				description: { type: 'string', maxLength: 32000 },
 				duration: { type: 'integer', maximum: 9999 },
 				difficulty: { type: 'string', maxLength: 16},
