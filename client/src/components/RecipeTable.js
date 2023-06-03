@@ -98,7 +98,7 @@ const propTypes = {
 		PropTypes.shape({
 			id: PropTypes.number.isRequired,
 			name: PropTypes.string.isRequired,
-			duration: PropTypes.string.isRequired,
+			duration: PropTypes.number.isRequired,
 			difficulty: PropTypes.string.isRequired,
 			price: PropTypes.number.isRequired,
 		}),

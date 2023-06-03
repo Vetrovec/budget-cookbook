@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Recipe } from '../components/Recipe';
 import { RecipeIngredientList } from '../components/RecipeIngredientList';
 import { useRecipeQuery } from '../hooks/useRecipeQuery';
@@ -7,6 +8,21 @@ import { useRecipeQuery } from '../hooks/useRecipeQuery';
 export function RecipeId() {
 	const { id } = useParams();
 	const recipeQuery = useRecipeQuery({ id });
+
+	const navigate = useNavigate();
+
+	const handleRecipeDelete = async () => {
+		const response = await fetch(`/recipe/${id}`, {
+			method: 'DELETE',
+		});
+		if (response.status !== 200) {
+			toast.error('Failed to delete recipe');
+			return;
+		}
+		toast.success('Recipe deleted');
+		navigate('/');
+	};
+
 	return (
 		<Box>
 			{recipeQuery.isLoading ? (
@@ -25,7 +41,7 @@ export function RecipeId() {
 					}}
 				>
 					<Box>
-						<Recipe recipe={recipeQuery.data} />
+						<Recipe recipe={recipeQuery.data} onDelete={handleRecipeDelete} />
 					</Box>
 					<Box>
 						<RecipeIngredientList
