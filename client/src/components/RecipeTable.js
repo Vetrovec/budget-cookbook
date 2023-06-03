@@ -60,9 +60,9 @@ export function RecipeTable({ isLoading, recipes }) {
 									<StyledTableCell align="right">
 										{recipe.hasImage && (
 											<img
-												width={96}
-												height="auto"
 												src={`/upload/${recipe.id}`}
+												alt="Preview"
+												style={{ width: '96px', height: 'auto' }}
 											/>
 										)}
 									</StyledTableCell>
