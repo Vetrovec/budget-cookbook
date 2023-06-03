@@ -215,7 +215,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					<TextField disabled size="small" placeholder="Ingredient amount" />
 				)}
 				<Typography sx={{ pt: 2, mt: 'auto' }}>
-					Total price: {totalPrice}
+					Total price: {totalPrice} Kč
 				</Typography>
 			</Box>
 			<Box

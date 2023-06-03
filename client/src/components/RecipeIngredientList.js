@@ -52,7 +52,7 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 									</Typography>
 								</ListItem>
 								<ListItem>
-									<Typography variant="body2">Price: {price}</Typography>
+									<Typography variant="body2">Price: {price} Kč</Typography>
 								</ListItem>
 							</List>
 						</ListItem>
@@ -60,7 +60,7 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 				})}
 			</List>
 			<Typography variant="subtitle1">
-				Total price: {totalPriceForPortions}
+				Total price: {totalPriceForPortions} Kč
 			</Typography>
 		</Box>
 	);

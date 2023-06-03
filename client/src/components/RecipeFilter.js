@@ -57,7 +57,7 @@ export function RecipeFilter({ filter, ingredients, onFilterChange }) {
 				}}
 			>
 				<TextField
-					label="Price less than"
+					label="Price less than (Kč)"
 					size="small"
 					autoComplete="off"
 					name="filter-price"
