@@ -35,6 +35,7 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 			</Box>
 			<List>
 				{ingredients.map((ingredient) => {
+					const amount = roundTo(ingredient.amount * portions, 3);
 					const price = roundTo(
 						ingredient.price * ingredient.amount * portions,
 						2,
@@ -47,7 +48,7 @@ export function RecipeIngredientList({ ingredients, totalPrice }) {
 								</ListItem>
 								<ListItem>
 									<Typography variant="body2">
-										Amount: {`${ingredient.amount} ${ingredient.baseUnit}`}
+										Amount: {`${amount} ${ingredient.baseUnit}`}
 									</Typography>
 								</ListItem>
 								<ListItem>
