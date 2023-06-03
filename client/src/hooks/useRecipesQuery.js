@@ -22,6 +22,7 @@ export function useRecipesQuery(options = { filter: {} }) {
 				duration: recipe.duration,
 				difficulty: recipe.difficulty,
 				price: Number(recipe.total_price),
+				hasImage: recipe.hasImage,
 			})),
 	});
 	return recipeQuery;
