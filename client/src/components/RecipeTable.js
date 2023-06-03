@@ -21,11 +21,12 @@ export function RecipeTable({ isLoading, recipes }) {
 			<Table aria-label="Recipe table">
 				<TableHead>
 					<StyledTableRow>
+						<StyledTableCell sx={{ width: 0 }} />
 						<StyledTableCell component="th">Name</StyledTableCell>
 						<StyledTableCell component="th">Duration</StyledTableCell>
 						<StyledTableCell component="th">Difficulty</StyledTableCell>
 						<StyledTableCell component="th" align="right">
-							Price
+							Price / portion
 						</StyledTableCell>
 					</StyledTableRow>
 				</TableHead>
@@ -40,7 +41,7 @@ export function RecipeTable({ isLoading, recipes }) {
 						<>
 							{!recipes?.length && (
 								<StyledTableRow>
-									<StyledTableCell colSpan={4} align="center">
+									<StyledTableCell colSpan={5} align="center">
 										No recipes found
 									</StyledTableCell>
 								</StyledTableRow>
@@ -56,11 +57,19 @@ export function RecipeTable({ isLoading, recipes }) {
 										'&:hover': { backgroundColor: theme.palette.grey[100] },
 									}}
 								>
+									<StyledTableCell align="right">
+										{recipe.hasImage && (
+											<img
+												src={`/upload/${recipe.id}`}
+												alt="Preview"
+												style={{ width: '96px', height: 'auto' }}
+											/>
+										)}
+									</StyledTableCell>
 									<StyledTableCell>
 										<Typography
 											sx={{
 												overflow: 'hidden',
-												maxWidth: '50vw',
 												textOverflow: 'ellipsis',
 												whiteSpace: 'nowrap',
 											}}
