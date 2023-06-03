@@ -8,29 +8,19 @@ import {
 	Typography,
 } from '@mui/material';
 import * as PropTypes from 'prop-types';
-import { useCallback } from 'react';
 
 export function RecipeFilter({ filter, ingredients, onFilterChange }) {
-	const handleToggleFilter = useCallback(
-		(e) => {
-			onFilterChange({ ...filter, isEnabled: e.target.checked });
-		},
-		[filter, onFilterChange],
-	);
+	const handleToggleFilter = (e) => {
+		onFilterChange({ ...filter, isEnabled: e.target.checked });
+	};
 
-	const handlePriceChange = useCallback(
-		(e) => {
-			onFilterChange({ ...filter, priceLessThan: e.target.value });
-		},
-		[filter, onFilterChange],
-	);
+	const handlePriceChange = (e) => {
+		onFilterChange({ ...filter, priceLessThan: e.target.value });
+	};
 
-	const handleIngredientSelect = useCallback(
-		(e) => {
-			onFilterChange({ ...filter, selectedIngredient: e.target.value });
-		},
-		[filter, onFilterChange],
-	);
+	const handleIngredientSelect = (e) => {
+		onFilterChange({ ...filter, selectedIngredient: e.target.value });
+	};
 
 	return (
 		<Box

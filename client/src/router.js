@@ -11,6 +11,8 @@ import { Ingredients } from './routes/ingredients';
 import { NotFound } from './routes/not-found';
 import { RecipeId } from './routes/recipe-id';
 
+// Create a router that uses the elements from the routes folder
+// and wraps them in a Layout component
 export const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route element={<Layout />}>

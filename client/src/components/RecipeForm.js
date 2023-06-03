@@ -18,26 +18,54 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
 	const [difficulty, setDifficulty] = useState('Medium');
-	const [selectedIngredients, setSelectedIngredients] = useState([]);
+	const [selectedIngredientIds, setSelectedIngredientIds] = useState([]);
 	const [ingredientAmountMap, setIngredientAmountMap] = useState(new Map());
 	const [previewImage, setPreviewImage] = useState();
 
 	const totalPrice = useMemo(() => {
-		const value = selectedIngredients.reduce((total, ingredientId) => {
+		// Calculate the total price of the recipe
+		const value = selectedIngredientIds.reduce((total, ingredientId) => {
 			const ingredient = ingredients.find(
 				(ingredient) => ingredient.id === ingredientId,
 			);
+			// If the ingredient doesn't exist, add 0 to the total
 			const amount = ingredientAmountMap.get(ingredientId) ?? 0;
 			return total + ingredient.price * amount;
 		}, 0);
+		// Round the value to 2 decimal places
 		return roundTo(value, 2);
 	}, [ingredientAmountMap, ingredients]);
+
+	const selectedIngredients = useMemo(
+		() =>
+			selectedIngredientIds.reduce((list, id) => {
+				// Find the ingredient by id
+				const ingredient = ingredients.find((target) => target.id === id);
+				// If the ingredient doesn't exist, return the list as is
+				if (!ingredient) {
+					return list;
+				}
+				// Otherwise, add the ingredient to the list
+				const { name, baseUnit } = ingredient;
+				const label = `${name} amount (${baseUnit})`;
+				const value = ingredientAmountMap.get(id) ?? '';
+				return [
+					...list,
+					{
+						id,
+						label,
+						value,
+					},
+				];
+			}, []),
+		[],
+	);
 
 	const handleIngredientSelect = (event) => {
 		const {
 			target: { value },
 		} = event;
-		setSelectedIngredients(
+		setSelectedIngredientIds(
 			typeof value === 'string' ? value.split(',') : value,
 		);
 	};
@@ -50,6 +78,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	};
 
 	const handleSubmit = (event) => {
+		// Prevent the form from refreshing the page
 		event.preventDefault();
 		onSubmit({
 			name,
@@ -57,7 +86,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 			duration: Number(duration),
 			difficulty,
 			previewImage,
-			ingredients: selectedIngredients.map((id) => ({
+			ingredients: selectedIngredientIds.map((id) => ({
 				id,
 				amount: Number(ingredientAmountMap.get(id)) ?? 0,
 			})),
@@ -167,7 +196,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 					displayEmpty
 					multiple
 					size="small"
-					value={selectedIngredients}
+					value={selectedIngredientIds}
 					onChange={handleIngredientSelect}
 					renderValue={(selectedIds) => {
 						if (!selectedIds?.length) {
@@ -191,27 +220,18 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						</MenuItem>
 					))}
 				</Select>
-				{selectedIngredients.map((id) => {
-					const ingredient = ingredients.find((target) => target.id === id);
-					if (!ingredient) {
-						return null;
-					}
-					const { name, baseUnit } = ingredient;
-					const label = `${name} amount (${baseUnit})`;
-					const value = ingredientAmountMap.get(id) ?? '';
-					return (
-						<TextField
-							key={id}
-							name={`ingredient-${id}`}
-							autoComplete="off"
-							size="small"
-							label={label}
-							value={value}
-							onChange={(e) => handleIngredientAmount(e, id)}
-						/>
-					);
-				})}
-				{!selectedIngredients.length && (
+				{selectedIngredients.map((ingredient) => (
+					<TextField
+						key={ingredient.id}
+						name={`ingredient-${ingredient.id}`}
+						autoComplete="off"
+						size="small"
+						label={ingredient.label}
+						value={ingredient.value}
+						onChange={(e) => handleIngredientAmount(e, ingredient.id)}
+					/>
+				))}
+				{!selectedIngredientIds.length && (
 					<TextField disabled size="small" placeholder="Ingredient amount" />
 				)}
 				<Typography sx={{ pt: 2, mt: 'auto' }}>
