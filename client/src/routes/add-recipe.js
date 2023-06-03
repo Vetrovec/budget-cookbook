@@ -29,7 +29,9 @@ export function AddRecipe() {
 			return;
 		}
 		const { id } = await response.json();
+		// If the recipe has an image, upload it
 		if (recipe.previewImage) {
+			// Create a FormData object to send the image
 			const data = new FormData();
 			data.append('image', recipe.previewImage);
 			await fetch(`/recipe/image/${id}`, {
