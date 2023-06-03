@@ -54,7 +54,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 		onSubmit({
 			name,
 			description,
-			duration,
+			duration: Number(duration),
 			difficulty,
 			previewImage,
 			ingredients: selectedIngredients.map((id) => ({
