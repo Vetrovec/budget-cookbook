@@ -1,7 +1,8 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, IconButton, Paper, Typography } from '@mui/material';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import * as PropTypes from 'prop-types';
 
-export function Recipe({ recipe }) {
+export function Recipe({ recipe, onDelete }) {
 	return (
 		<Box component={Paper} sx={{ p: 2 }}>
 			<Box sx={{ display: 'flex', gap: 2 }}>
@@ -40,6 +41,11 @@ export function Recipe({ recipe }) {
 						Duration: {recipe.duration} minutes
 					</Typography>
 				</Box>
+				<Box sx={{ ml: 'auto' }}>
+					<IconButton aria-label="delete" color="error" onClick={onDelete}>
+						<DeleteForeverIcon />
+					</IconButton>
+				</Box>
 			</Box>
 			<Box
 				sx={{ px: 1, mt: 4, wordBreak: 'break-all' }}
@@ -55,9 +61,10 @@ const propTypes = {
 		name: PropTypes.string.isRequired,
 		description: PropTypes.string.isRequired,
 		difficulty: PropTypes.string.isRequired,
-		duration: PropTypes.string.isRequired,
+		duration: PropTypes.number.isRequired,
 		price: PropTypes.number.isRequired,
 		hasImage: PropTypes.bool.isRequired,
 	}).isRequired,
+	onDelete: PropTypes.func.isRequired,
 };
 Recipe.propTypes = propTypes;
