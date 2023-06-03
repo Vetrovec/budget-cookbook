@@ -16,8 +16,11 @@ export function RecipeId() {
 			) : recipeQuery.data ? (
 				<Box
 					sx={{
+						overflow: 'hidden',
 						display: 'grid',
-						gridTemplateColumns: { lg: '1fr minmax(320px, 25%)' },
+						gridTemplateColumns: {
+							lg: 'minmax(0, 1fr) minmax(320px, 25%)',
+						},
 						gap: 2,
 					}}
 				>
