@@ -211,6 +211,9 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 					);
 				})}
+				{!selectedIngredients.length && (
+					<TextField disabled size="small" placeholder="Ingredient amount" />
+				)}
 				<Typography sx={{ pt: 2, mt: 'auto' }}>
 					Total price: {totalPrice}
 				</Typography>
