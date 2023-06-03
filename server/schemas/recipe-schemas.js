@@ -18,21 +18,23 @@ const createRecipeSchema = {
 		recipe: {
 			type: 'object',
 			properties: {
-				name: { type: 'string' },
-				description: { type: 'string' },
-				duration: { type: 'string' },
-				difficulty: { type: 'string' },
+				name: { type: 'string', maxLength: 64 },
+				description: { type: 'string', maxLength: 32000 },
+				duration: { type: 'integer', maximum: 9999 },
+				difficulty: { type: 'string', maxLength: 16},
 			},
 			required: ['name', 'description', 'duration', 'difficulty'],
 		},
 		ingredients: {
 			type: 'array',
+			minItems: 1,
+			uniqueItems: true,
 			items: {
 				type: 'object',
-				properties: {
-					id: { type: 'number' },
-					amount: { type: 'number' },
-				},
+					properties: {
+						id: { type: 'number' },
+						amount: { type: 'number' },
+					},
 				required: ['id', 'amount'],
 			},
 		},
