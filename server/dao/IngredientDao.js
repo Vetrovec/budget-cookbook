@@ -29,7 +29,7 @@ class IngredientDao {
 	// Get all ingredients
 	getAll() {
 		return new Promise((resolve, reject) => {
-			this.db.all('SELECT * FROM ingredient', (err, rows) => {
+			this.db.all('SELECT * FROM ingredient ORDER BY name', (err, rows) => {
 				if (err) {
 					reject(err);
 					return;
