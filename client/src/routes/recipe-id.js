@@ -14,11 +14,17 @@ export function RecipeId() {
 			) : recipeQuery.error ? (
 				<Typography>Error loading recipe</Typography>
 			) : recipeQuery.data ? (
-				<Box sx={{ display: 'flex', gap: 2 }}>
-					<Box sx={{ flex: 'auto' }}>
+				<Box
+					sx={{
+						display: 'grid',
+						gridTemplateColumns: { lg: '1fr minmax(320px, 25%)' },
+						gap: 2,
+					}}
+				>
+					<Box>
 						<Recipe recipe={recipeQuery.data} />
 					</Box>
-					<Box sx={{ width: '25%', minWidth: '320px' }}>
+					<Box>
 						<RecipeIngredientList
 							ingredients={recipeQuery.data.ingredients}
 							totalPrice={recipeQuery.data.price}
