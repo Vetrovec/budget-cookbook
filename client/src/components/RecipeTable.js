@@ -4,6 +4,7 @@ import {
 	TableBody,
 	TableContainer,
 	TableHead,
+	Typography,
 	useTheme,
 } from '@mui/material';
 import * as PropTypes from 'prop-types';
@@ -20,10 +21,12 @@ export function RecipeTable({ isLoading, recipes }) {
 			<Table aria-label="Recipe table">
 				<TableHead>
 					<StyledTableRow>
-						<StyledTableCell>Name</StyledTableCell>
-						<StyledTableCell>Duration</StyledTableCell>
-						<StyledTableCell>Difficulty</StyledTableCell>
-						<StyledTableCell align="right">Price</StyledTableCell>
+						<StyledTableCell component="th">Name</StyledTableCell>
+						<StyledTableCell component="th">Duration</StyledTableCell>
+						<StyledTableCell component="th">Difficulty</StyledTableCell>
+						<StyledTableCell component="th" align="right">
+							Price
+						</StyledTableCell>
 					</StyledTableRow>
 				</TableHead>
 				<TableBody>
@@ -53,8 +56,17 @@ export function RecipeTable({ isLoading, recipes }) {
 										'&:hover': { backgroundColor: theme.palette.grey[100] },
 									}}
 								>
-									<StyledTableCell component="th" scope="row">
-										{recipe.name}
+									<StyledTableCell>
+										<Typography
+											sx={{
+												overflow: 'hidden',
+												maxWidth: '50vw',
+												textOverflow: 'ellipsis',
+												whiteSpace: 'nowrap',
+											}}
+										>
+											{recipe.name}
+										</Typography>
 									</StyledTableCell>
 									<StyledTableCell>{recipe.duration}</StyledTableCell>
 									<StyledTableCell>{recipe.difficulty}</StyledTableCell>
