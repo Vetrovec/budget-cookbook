@@ -38,7 +38,7 @@ export function IngredientForm({ onSubmit }) {
 				/>
 				<TextField
 					size="small"
-					label="Price"
+					label="Price (Kč)"
 					name="ingredient-price"
 					autoComplete="off"
 					value={price}

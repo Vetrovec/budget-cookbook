@@ -68,10 +68,10 @@ export function RecipeTable({ isLoading, recipes }) {
 											{recipe.name}
 										</Typography>
 									</StyledTableCell>
-									<StyledTableCell>{recipe.duration}</StyledTableCell>
+									<StyledTableCell>{recipe.duration} min</StyledTableCell>
 									<StyledTableCell>{recipe.difficulty}</StyledTableCell>
 									<StyledTableCell align="right">
-										{recipe.price}
+										{recipe.price} Kč
 									</StyledTableCell>
 								</StyledTableRow>
 							))}
