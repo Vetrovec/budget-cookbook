@@ -17,7 +17,7 @@ export function RecipeForm({ ingredients, onSubmit }) {
 	const [name, setName] = useState('');
 	const [description, setDescription] = useState('');
 	const [duration, setDuration] = useState('');
-	const [difficulty, setDifficulty] = useState('');
+	const [difficulty, setDifficulty] = useState('Medium');
 	const [selectedIngredients, setSelectedIngredients] = useState([]);
 	const [ingredientAmountMap, setIngredientAmountMap] = useState(new Map());
 	const [previewImage, setPreviewImage] = useState();
@@ -135,20 +135,23 @@ export function RecipeForm({ ingredients, onSubmit }) {
 						/>
 						<TextField
 							size="small"
-							label="Duration"
+							label="Duration in minutes"
 							name="recipe-duration"
 							autoComplete="off"
 							value={duration}
 							onChange={(event) => setDuration(event.target.value)}
 						/>
-						<TextField
+						<Select
 							size="small"
-							label="Difficulty"
 							name="recipe-difficulty"
-							autoComplete="off"
 							value={difficulty}
+							renderValue={(value) => `Difficulty: ${value}`}
 							onChange={(event) => setDifficulty(event.target.value)}
-						/>
+						>
+							<MenuItem value="Easy">Easy</MenuItem>
+							<MenuItem value="Medium">Medium</MenuItem>
+							<MenuItem value="Hard">Hard</MenuItem>
+						</Select>
 					</Box>
 				</Box>
 			</Box>
