@@ -26,3 +26,5 @@ git clone https://github.com/Vetrovec/budget-cookbook.git
 Install the required dependencies:
 
 npm install
+
+mt
